@@ -271,6 +271,60 @@ class MovieApp {
             "The Bad Guys 2": { r: "PG", s: 6.5, d: 105 }
         };
     }
+    getOfficialData() {
+        return {
+            "Return to Never Land": { r: "G", s: 5.7, d: 72 },
+            "Tarzan & Jane": { r: "G", s: 5.5, d: 72 },
+            "Stuart Little 2": { r: "PG", s: 5.9, d: 78 },
+            "The Jungle Book 2": { r: "G", s: 5.7, d: 72 },
+            "Atlantis: Milo's Return": { r: "PG", s: 5.4, d: 72 },
+            "Stitch! The Movie": { r: "PG", s: 5.7, d: 60 },
+            "The Lion King 1 1/2: Hakuna Matata": { r: "G", s: 6.7, d: 77 },
+            "Mulan II": { r: "G", s: 5.2, d: 79 },
+            "Stuart Little 3: Call of the Wild": { r: "G", s: 4.8, d: 75 },
+            "Tarzan II": { r: "G", s: 5.5, d: 72 },
+            "Kronk's New Groove": { r: "G", s: 6.0, d: 75 },
+            "Lilo & Stitch 2: Stitch Has a Glitch": { r: "G", s: 5.8, d: 68 },
+            "Bambi II": { r: "G", s: 6.7, d: 72 },
+            "Brother Bear 2": { r: "G", s: 5.7, d: 73 },
+            "Cinderella III": { r: "G", s: 6.7, d: 72 },
+            "Shrek the Third": { r: "PG", s: 6.1, d: 92 },
+            "Open Season 2": { r: "G", s: 5.1, d: 76 },
+            "Madagascar: Escape 2 Africa": { r: "PG", s: 6.6, d: 89 },
+            "Open Season 3": { r: "G", s: 4.9, d: 75 },
+            "Shrek Forever After": { r: "PG", s: 6.3, d: 93 },
+            "Cars 2": { r: "G", s: 6.2, d: 106 },
+            "Kung Fu Panda 2": { r: "PG", s: 7.2, d: 91 },
+            "Madagascar 3: Europe's Most Wanted": { r: "PG", s: 6.8, d: 93 },
+            "Cloudy with a Chance of Meatballs 2": { r: "PG", s: 6.5, d: 94 },
+            "The Smurfs 2": { r: "PG", s: 5.4, d: 105 },
+            "How to Train Your Dragon 2": { r: "PG", s: 7.8, d: 102 },
+            "Open Season: Scared Silly": { r: "G", s: 4.3, d: 85 },
+            "Kung Fu Panda 3": { r: "PG", s: 7.1, d: 95 },
+            "Smurfs: The Lost Village": { r: "PG", s: 6.0, d: 90 },
+            "Surf's Up 2: WaveMania": { r: "PG", s: 4.8, d: 85 },
+            "The Lego Movie 2: The Second Part": { r: "PG", s: 6.6, d: 107 },
+            "Toy Story 4": { r: "G", s: 7.7, d: 100 },
+            "Ralph Breaks the Internet": { r: "PG", s: 7.2, d: 112 },
+            "Hotel Transylvania 3: Summer Vacation": { r: "PG", s: 6.3, d: 97 },
+            "Frozen 2": { r: "PG", s: 7.4, d: 103 },
+            "The Angry Birds Movie 2": { r: "PG", s: 6.5, d: 99 },
+            "How to Train Your Dragon: The Hidden World": { r: "PG", s: 7.6, d: 104 },
+            "Trolls World Tour": { r: "PG", s: 5.9, d: 90 },
+            "The Croods: A New Age": { r: "PG", s: 7.4, d: 95 },
+            "Spirit Untamed": { r: "PG", s: 5.7, d: 84 },
+            "The Boss Baby: Family Business": { r: "PG", s: 5.9, d: 98 },
+            "Peter Rabbit 2: The Runaway": { r: "PG", s: 6.7, d: 99 },
+            "Hotel Transylvania: Transformania": { r: "PG", s: 5.9, d: 87 },
+            "Trolls Band Together": { r: "PG", s: 6.1, d: 91 },
+            "Kung Fu Panda 4": { r: "PG", s: 6.8, d: 94 },
+            "Megamind vs. the Doom Syndicate": { r: "PG", s: 3.4, d: 92 },
+            "Despicable Me 4": { r: "PG", s: 6.2, d: 95 },
+            "Moana 2": { r: "PG", s: 7.5, d: 100 },
+            "Zootopia 2": { r: "PG", s: 7.5, d: 108 },
+            "The Bad Guys 2": { r: "PG", s: 6.5, d: 105 }
+        };
+    }
 
     async generateDB() {
         // 1. Fetch data from external JSON file

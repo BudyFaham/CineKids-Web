@@ -3,13 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CineKids Ultimate - The ultimate kids movie database with ratings, filters, and favorites">
     <title>CineKids Ultimate | User Data V3</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- المتغيرات والتصميم الأساسي --- */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.90);
+            --star-color: #fbbf24;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            /* ألوان الاستوديوهات */
+            --disney: #1e88e5; --pixar: #fbc02d; --dreamworks: #8e24aa;
+            --netflix: #e53935; --sony: #000000; --ghibli: #43a047;
+            --illumination: #ffeb3b; --fox: #0d47a1; --wb: #c62828;
+            --bluesky: #00bcd4; --laika: #607d8b; --universal: #43a047;
+        }
+        /* Light Mode */
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --accent-color: #3b82f6;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.90);
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        :focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 4px; border-radius: 4px;
+        }
+        /* --- الهيدر --- */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .header-content {
+            max-width: 1400px; margin: 0 auto; padding: 0 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .top-bar {
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 10px;
+        }
+        .logo {
+            font-size: 2rem; font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            cursor: pointer; border: none; padding: 0; font-family: inherit;
+        }
+        .logo:hover { transform: scale(1.05); transition: transform 0.2s ease; }
+        .stats-badge {
+            background: rgba(255,255,255,0.1); padding: 5px 15px;
+            border-radius: 50px; font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0;
+        }
+        [data-theme="light"] .stats-badge {
+            background: rgba(0,0,0,0.1); color: #0f172a;
+        }
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; font-size: 1.2rem;
+        }
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color); transform: scale(1.1);
+        }
+        .controls-bar {
+            display: flex; gap: 15px; flex-wrap: wrap; align-items: center;
+        }
+        .search-container {
+            flex: 1; display: flex; gap: 10px; min-width: 280px;
+        }
+        .search-box {
+            flex: 1; background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 20px; border-radius: 12px;
+            color: white; font-family: inherit; transition: 0.3s;
+        }
+        [data-theme="light"] .search-box {
+            background: rgba(0, 0, 0, 0.05);
+            color: #0f172a; border-color: rgba(0,0,0,0.1);
+        }
+        .search-box:focus {
+            border-color: var(--accent-color); outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .sort-select {
+            background: rgba(15, 23, 42, 0.6); color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0 15px; border-radius: 12px;
+            cursor: pointer; font-family: inherit;
+        }
+        [data-theme="light"] .sort-select {
+            background: rgba(0, 0, 0, 0.05);
+            color: #0f172a; border-color: rgba(0,0,0,0.1);
+        }
+        .sort-select option {
+            background: var(--card-bg); color: var(--text-primary);
+        }
+        .filters {
+            display: flex; gap: 8px; overflow-x: auto;
+            padding-bottom: 5px; scrollbar-width: none;
+        }
+        .filters::-webkit-scrollbar { display: none; }
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            padding: 8px 16px; border-radius: 20px;
+            cursor: pointer; white-space: nowrap; font-size: 0.9rem;
+            transition: all 0.3s ease; font-family: inherit;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary); transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: var(--accent-color); color: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        .filter-btn[data-filter="favorites"] {
+            border-color: rgba(239, 68, 68, 0.3); color: #fca5a5;
+        }
+        .filter-btn[data-filter="favorites"].active {
+            background: var(--danger-color); border-color: var(--danger-color);
+            color: white; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+        /* --- الكروت والشبكة --- */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px; max-width: 1400px; margin: 40px auto; padding: 0 20px;
+        }
+        .movie-card {
+            background: var(--card-bg); border-radius: 16px;
+            overflow: hidden; position: relative; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; transform: translateY(20px);
+            display: flex; flex-direction: column;
+        }
+        .movie-card.visible { opacity: 1; transform: translateY(0); }
+        .movie-card:hover, .movie-card:focus-visible {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255,255,255,0.2); z-index: 10;
+        }
+        .poster-wrapper {
+            position: relative; height: 320px; overflow: hidden;
+            background: var(--card-bg);
+        }
+        .poster-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .movie-card:hover .poster-wrapper img { transform: scale(1.1); }
+        .badges-container {
+            position: absolute; top: 10px; left: 10px; right: auto;
+            display: flex; gap: 8px; pointer-events: none; z-index: 10;
+        }
+        .studio-badge {
+            padding: 4px 10px; border-radius: 8px; font-size: 0.7rem;
+            font-weight: bold; color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px); box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .age-badge {
+            padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;
+            font-weight: 900; background: rgba(15, 23, 42, 0.85);
+            color: #fff; border: 2px solid; backdrop-filter: blur(4px);
+            min-width: 32px; text-align: center; letter-spacing: 0px;
+        }
+        [data-theme="light"] .age-badge {
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .fav-btn {
+            position: absolute; top: 10px; right: 10px; z-index: 20;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #cbd5e1; width: 36px; height: 36px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(4px); -webkit-tap-highlight-color: transparent;
+        }
+        [data-theme="light"] .fav-btn {
+            background: rgba(255, 255, 255, 0.9); color: #64748b;
+        }
+        .fav-btn:hover {
+            background: white; color: var(--danger-color); transform: scale(1.15);
+        }
+        .fav-btn.active {
+            background: var(--danger-color); color: white;
+            border-color: var(--danger-color);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+        .fav-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .card-content {
+            padding: 15px;
+            background: linear-gradient(to bottom, var(--card-bg), #162030);
+            flex: 1; display: flex; flex-direction: column;
+        }
+        [data-theme="light"] .card-content {
+            background: linear-gradient(to bottom, var(--card-bg), #f8fafc);
+        }
+        .movie-title {
+            font-size: 1.05rem; margin: 0 0 6px 0; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; color: #e2e8f0; font-weight: 800;
+        }
+        [data-theme="light"] .movie-title { color: #0f172a; }
+        .movie-year {
+            font-size: 0.85rem; color: var(--text-secondary);
+            margin-bottom: 12px; display: block;
+        }
+        .meta-info {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: auto; padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        [data-theme="light"] .meta-info { border-top-color: rgba(0,0,0,0.1); }
+        .rating-box {
+            display: flex; align-items: center; gap: 4px;
+            color: var(--star-color); font-weight: bold; font-size: 0.9rem;
+        }
+        .duration-box {
+            display: flex; align-items: center; gap: 4px;
+            color: var(--text-secondary); font-size: 0.8rem;
+        }
+        .duration-icon { width: 14px; height: 14px; opacity: 0.7; }
+        .empty-state {
+            grid-column: 1 / -1; text-align: center;
+            padding: 60px 20px; color: var(--text-secondary);
+        }
+        .empty-state-icon { font-size: 4rem; margin-bottom: 20px; }
+        .empty-state h3 {
+            font-size: 1.5rem; margin: 0 0 10px 0; color: var(--text-primary);
+        }
+        .empty-state p { margin: 0; opacity: 0.8; }
+        @media (max-width: 768px) {
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .logo { font-size: 1.5rem; }
+            .controls-bar { flex-direction: column; align-items: stretch; }
+            .search-container { min-width: auto; }
+            .poster-wrapper { height: 240px; }
+        }
+        @media (max-width: 480px) {
+            .movies-grid { grid-template-columns: repeat(2, 1fr); padding: 0 10px; }
+            .movie-title { font-size: 0.95rem; }
+        }
+    </style>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- 1. استيراد مكتبات Firebase (Compat Version) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <header>
@@ -45,49 +314,8 @@
             </div>
         </div>
     </header>
-
     <div class="movies-grid" id="moviesGrid"></div>
-
-    <!-- Admin Modal -->
-    <div id="adminModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>🎬 Add New Movie</h2>
-                <button class="close-btn" id="closeModal">×</button>
-            </div>
-            <div class="admin-form">
-                <input type="text" id="newTitle" placeholder="Movie Title">
-                <select id="newStudio">
-                    <option value="Disney">Disney</option>
-                    <option value="Pixar">Pixar</option>
-                    <option value="DreamWorks">DreamWorks</option>
-                    <option value="Netflix">Netflix</option>
-                    <option value="Sony">Sony</option>
-                    <option value="Illumination">Illumination</option>
-                    <option value="Ghibli">Ghibli</option>
-                    <option value="Fox">Fox</option>
-                    <option value="WB">Warner Bros</option>
-                    <option value="Blue Sky">Blue Sky</option>
-                    <option value="Laika">Laika</option>
-                    <option value="Universal">Universal</option>
-                </select>
-                <div class="form-row">
-                    <input type="number" id="newYear" placeholder="Year">
-                    <input type="number" id="newScore" step="0.1" placeholder="Score">
-                </div>
-                <div class="form-row">
-                    <input type="text" id="newRating" placeholder="Rating (e.g. PG)">
-                    <input type="number" id="newDuration" placeholder="Duration (Min)">
-                </div>
-                <div class="image-alert">
-                    ⚠️ Upload image named: <span id="nextImageName" style="color: var(--accent-color);">...</span>
-                </div>
-                <button id="addMovieBtn" class="action-btn">Add to Database 🚀</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. استدعاء ملف السكريبت العادي (بدون module) -->
-    <script src="script.js"></script>
+    
+<script src="script.js"></script>
 </body>
 </html>

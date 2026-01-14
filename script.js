@@ -1,8 +1,4 @@
-// استيراد مكتبات Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// إعدادات مشروعك (من الصورة اللي بعتها)
+// --- إعدادات Firebase ---
 const firebaseConfig = {
   apiKey: "AIzaSyCpXGrXPipufwSFVMD6o02ntK1Hq2V9zmI",
   authDomain: "cinekids-db.firebaseapp.com",
@@ -12,9 +8,9 @@ const firebaseConfig = {
   appId: "1:790814288590:web:37ac6ba3b638ef1ddefe9f"
 };
 
-// تشغيل Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// تشغيل Firebase (بالطريقة الكلاسيكية)
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 class MovieApp {
     constructor() {
@@ -39,10 +35,10 @@ class MovieApp {
             filterBtns: document.querySelectorAll('.filter-btn'),
             resetBtn: document.getElementById('resetBtn'),
             themeToggle: document.getElementById('themeToggle'),
-            // عناصر لوحة الأدمن
+            // Admin
             modal: document.getElementById('adminModal'),
             closeModalBtn: document.getElementById('closeModal'),
-            addMovieBtn: document.getElementById('generateBtn'), // الزرار اللي كان اسمه generateBtn
+            addMovieBtn: document.getElementById('addMovieBtn'),
             nextImageName: document.getElementById('nextImageName'),
             inputs: {
                 title: document.getElementById('newTitle'),
@@ -67,10 +63,7 @@ class MovieApp {
     async init() {
         this.applyTheme();
         this.bindEvents();
-        
-        // تحميل الأفلام من قاعدة البيانات
         await this.loadMovies();
-        
         this.applySavedPreferences();
         this.render();
     }
@@ -78,19 +71,17 @@ class MovieApp {
     async loadMovies() {
         this.dom.countBadge.innerText = 'Connecting...';
         try {
-            // 1. محاولة جلب البيانات من Firestore
-            const q = query(collection(db, "movies"), orderBy("id", "desc"));
-            const querySnapshot = await getDocs(q);
+            // جلب البيانات من Firestore
+            const snapshot = await db.collection("movies").orderBy("id", "desc").get();
             
-            // 2. لو القاعدة فاضية (أول مرة)، نعمل Migration
-            if (querySnapshot.empty) {
+            if (snapshot.empty) {
                 console.log("Database empty. Starting migration...");
                 await this.migrateData();
-                return this.loadMovies(); // نعيد التحميل
+                return this.loadMovies();
             }
 
             const dbMovies = [];
-            querySnapshot.forEach((doc) => {
+            snapshot.forEach((doc) => {
                 dbMovies.push(doc.data());
             });
 
@@ -101,11 +92,10 @@ class MovieApp {
         } catch (error) {
             console.error("Error loading movies:", error);
             this.dom.countBadge.innerText = 'Error!';
-            alert("حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
+            alert("حدث خطأ في الاتصال بقاعدة البيانات.");
         }
     }
 
-    // دالة لرفع البيانات القديمة مرة واحدة
     async migrateData() {
         this.dom.countBadge.innerText = 'Migrating...';
         const response = await fetch('movies.json');
@@ -115,7 +105,6 @@ class MovieApp {
         const officialData = this.getOfficialData();
         const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
 
-        // تجهيز البيانات
         const processedMovies = rawData.map((m, i) => {
             let r, s, d;
             if (customData[m.t]) {
@@ -155,23 +144,29 @@ class MovieApp {
             };
         });
 
-        // رفع البيانات
+        // Batch Write (أسرع وأضمن)
+        const batch = db.batch();
+        processedMovies.forEach((movie) => {
+            const docRef = db.collection("movies").doc(); // ID تلقائي
+            batch.set(docRef, movie);
+        });
+
+        // بما أن العدد كبير، هنرفعهم واحد واحد عشان نتفادى حدود الـ Batch (500)
+        // للأمان هنستخدم Loop عادية هنا
         let count = 0;
         for (const movie of processedMovies) {
-            await addDoc(collection(db, "movies"), movie);
+            await db.collection("movies").add(movie);
             count++;
             this.dom.countBadge.innerText = `Uploading ${count}...`;
         }
         alert("مبروك! تم رفع كل الأفلام لقاعدة البيانات بنجاح 🎉");
     }
 
-    // --- منطق لوحة الأدمن ---
+    // --- Admin Logic ---
     openAdminPanel() {
         this.dom.modal.classList.add('open');
-        // توقع رقم الصورة القادم
         const maxId = this.state.movies.reduce((max, m) => Math.max(max, m.id || 0), 0);
         this.dom.nextImageName.textContent = `${maxId + 1}.jpg`;
-        // تغيير نص الزرار
         this.dom.addMovieBtn.innerText = "Add to Database 🚀";
     }
 
@@ -185,7 +180,7 @@ class MovieApp {
         const year = parseInt(this.dom.inputs.year.value);
         const score = parseFloat(this.dom.inputs.score.value);
         const rating = this.dom.inputs.rating.value;
-        const durationRaw = parseInt(this.dom.inputs.duration.value); // بالدقائق
+        const durationRaw = parseInt(this.dom.inputs.duration.value);
 
         if (!title || !year) {
             alert("Please fill required fields!");
@@ -194,14 +189,12 @@ class MovieApp {
 
         this.dom.addMovieBtn.innerText = "Saving...";
         
-        // حساب لون الشارة
         let badgeColor;
         if (rating === "Banned") badgeColor = "#ef4444";
         else if (rating === "ALL" || rating === "G" || rating === "4+" || rating === "5+") badgeColor = "#22c55e";
         else if (rating === "PG" || rating === "6+" || rating === "7+" || rating === "8+") badgeColor = "#eab308";
         else badgeColor = "#f97316";
 
-        // حساب المدة
         let durationDisplay = durationRaw;
         if (typeof durationRaw === 'number') {
             const hours = Math.floor(durationRaw / 60);
@@ -209,7 +202,6 @@ class MovieApp {
             durationDisplay = `${hours}h ${minutes}m`;
         }
 
-        // حساب الـ ID الجديد
         const maxId = this.state.movies.reduce((max, m) => Math.max(max, m.id || 0), 0);
         const newId = maxId + 1;
         const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
@@ -228,18 +220,14 @@ class MovieApp {
         };
 
         try {
-            await addDoc(collection(db, "movies"), newMovieObj);
+            await db.collection("movies").add(newMovieObj);
             alert(`تم إضافة فيلم ${title} بنجاح! 🎉`);
             this.closeAdminPanel();
-            this.dom.addMovieBtn.innerText = "Generate JSON Code"; // نرجعه للأصل
-            this.loadMovies(); // تحديث الصفحة
-            
-            // تنظيف الحقول
+            this.loadMovies();
             Object.values(this.dom.inputs).forEach(inp => inp.value = '');
-            
         } catch (e) {
             console.error(e);
-            alert("Error adding movie: " + e.message);
+            alert("Error: " + e.message);
             this.dom.addMovieBtn.innerText = "Try Again";
         }
     }
@@ -265,15 +253,11 @@ class MovieApp {
     bindEvents() {
         this.dom.searchInput.addEventListener('input', this.debounce((e) => {
             const val = e.target.value.toLowerCase(); 
-            
-            // --- الكود السري لفتح الأدمن ---
             if (e.target.value === "5352009") {
                 this.openAdminPanel();
                 e.target.value = ""; 
                 return;
             }
-            // ------------------
-
             this.state.search = val;
             this.render();
         }, 300));
@@ -297,18 +281,8 @@ class MovieApp {
         this.dom.resetBtn.addEventListener('click', () => this.reset());
         this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
         
-        // أزرار لوحة الأدمن
         if(this.dom.closeModalBtn) this.dom.closeModalBtn.addEventListener('click', () => this.closeAdminPanel());
-        
-        // تعديل مهم: الزرار دلوقتي بيضيف للداتا بيز مش بيعمل JSON
-        if(this.dom.addMovieBtn) {
-            // نشيل أي مستمع قديم (لو موجود) ونحط الجديد
-            const newBtn = this.dom.addMovieBtn.cloneNode(true);
-            this.dom.addMovieBtn.parentNode.replaceChild(newBtn, this.dom.addMovieBtn);
-            this.dom.addMovieBtn = newBtn;
-            
-            this.dom.addMovieBtn.addEventListener('click', () => this.addNewMovie());
-        }
+        if(this.dom.addMovieBtn) this.dom.addMovieBtn.addEventListener('click', () => this.addNewMovie());
     }
 
     debounce(func, wait) {
@@ -489,7 +463,6 @@ class MovieApp {
         return card;
     }
 
-    // دوال البيانات القديمة (تستخدم فقط في أول مرة للرفع)
     async getInitialData() {
         const response = await fetch('movies.json');
         return await response.json();

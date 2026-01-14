@@ -1,21 +1,3 @@
-// استيراد مكتبات Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// إعدادات مشروعك (من الصورة اللي بعتها)
-const firebaseConfig = {
-  apiKey: "AIzaSyCpXGrXPipufwSFVMD6o02ntK1Hq2V9zmI",
-  authDomain: "cinekids-db.firebaseapp.com",
-  projectId: "cinekids-db",
-  storageBucket: "cinekids-db.firebasestorage.app",
-  messagingSenderId: "790814288590",
-  appId: "1:790814288590:web:37ac6ba3b638ef1ddefe9f"
-};
-
-// تشغيل Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 class MovieApp {
     constructor() {
         const savedState = JSON.parse(localStorage.getItem('cinekids_prefs')) || {};
@@ -38,27 +20,22 @@ class MovieApp {
             sortSelect: document.getElementById('sortSelect'),
             filterBtns: document.querySelectorAll('.filter-btn'),
             resetBtn: document.getElementById('resetBtn'),
-            themeToggle: document.getElementById('themeToggle'),
-            // عناصر لوحة الأدمن
-            modal: document.getElementById('adminModal'),
-            closeModalBtn: document.getElementById('closeModal'),
-            addMovieBtn: document.getElementById('generateBtn'), // الزرار اللي كان اسمه generateBtn
-            nextImageName: document.getElementById('nextImageName'),
-            inputs: {
-                title: document.getElementById('newTitle'),
-                studio: document.getElementById('newStudio'),
-                year: document.getElementById('newYear'),
-                score: document.getElementById('newScore'),
-                rating: document.getElementById('newRating'),
-                duration: document.getElementById('newDuration')
-            }
+            themeToggle: document.getElementById('themeToggle')
         };
 
         this.studioColors = {
-            'Disney': 'var(--disney)', 'Pixar': 'var(--pixar)', 'DreamWorks': 'var(--dreamworks)',
-            'Netflix': 'var(--netflix)', 'Sony': 'var(--sony)', 'Ghibli': 'var(--ghibli)',
-            'Illumination': 'var(--illumination)', 'Fox': 'var(--fox)', 'WB': 'var(--wb)',
-            'Blue Sky': 'var(--bluesky)', 'Laika': 'var(--laika)', 'Universal': 'var(--universal)'
+            'Disney': 'var(--disney)',
+            'Pixar': 'var(--pixar)',
+            'DreamWorks': 'var(--dreamworks)',
+            'Netflix': 'var(--netflix)',
+            'Sony': 'var(--sony)',
+            'Ghibli': 'var(--ghibli)',
+            'Illumination': 'var(--illumination)',
+            'Fox': 'var(--fox)',
+            'WB': 'var(--wb)',
+            'Blue Sky': 'var(--bluesky)',
+            'Laika': 'var(--laika)',
+            'Universal': 'var(--universal)'
         };
 
         this.init();
@@ -66,182 +43,10 @@ class MovieApp {
 
     async init() {
         this.applyTheme();
-        this.bindEvents();
-        
-        // تحميل الأفلام من قاعدة البيانات
-        await this.loadMovies();
-        
+        this.state.movies = await this.generateDB();
         this.applySavedPreferences();
+        this.bindEvents();
         this.render();
-    }
-
-    async loadMovies() {
-        this.dom.countBadge.innerText = 'Connecting...';
-        try {
-            // 1. محاولة جلب البيانات من Firestore
-            const q = query(collection(db, "movies"), orderBy("id", "desc"));
-            const querySnapshot = await getDocs(q);
-            
-            // 2. لو القاعدة فاضية (أول مرة)، نعمل Migration
-            if (querySnapshot.empty) {
-                console.log("Database empty. Starting migration...");
-                await this.migrateData();
-                return this.loadMovies(); // نعيد التحميل
-            }
-
-            const dbMovies = [];
-            querySnapshot.forEach((doc) => {
-                dbMovies.push(doc.data());
-            });
-
-            this.state.movies = dbMovies;
-            this.dom.countBadge.innerText = `${dbMovies.length} Movies`;
-            console.log(`Loaded ${dbMovies.length} movies from Firebase`);
-
-        } catch (error) {
-            console.error("Error loading movies:", error);
-            this.dom.countBadge.innerText = 'Error!';
-            alert("حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
-        }
-    }
-
-    // دالة لرفع البيانات القديمة مرة واحدة
-    async migrateData() {
-        this.dom.countBadge.innerText = 'Migrating...';
-        const response = await fetch('movies.json');
-        const rawData = await response.json();
-        
-        const customData = this.getFirst157Data();
-        const officialData = this.getOfficialData();
-        const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
-
-        // تجهيز البيانات
-        const processedMovies = rawData.map((m, i) => {
-            let r, s, d;
-            if (customData[m.t]) {
-                const data = customData[m.t];
-                r = data.r; s = data.s; d = data.d;
-            } else if (officialData[m.t]) {
-                const data = officialData[m.t];
-                r = data.r; s = data.s; d = data.d;
-            } else {
-                r = "G"; s = 7.0; d = 90;
-            }
-
-            let badgeColor;
-            if (r === "Banned") badgeColor = "#ef4444";
-            else if (r === "ALL" || r === "G" || r === "4+" || r === "5+") badgeColor = "#22c55e";
-            else if (r === "PG" || r === "6+" || r === "7+" || r === "8+") badgeColor = "#eab308";
-            else badgeColor = "#f97316";
-
-            let durationDisplay = d;
-            if (typeof d === 'number') {
-                const hours = Math.floor(d / 60);
-                const minutes = d % 60;
-                durationDisplay = `${hours}h ${minutes}m`;
-            }
-
-            return {
-                id: i + 1,
-                title: m.t,
-                studio: m.s,
-                year: m.y,
-                image: `${baseUrl}${i + 1}.jpg`,
-                rating: r,
-                badgeColor: badgeColor,
-                score: s,
-                duration: durationDisplay,
-                rawDuration: d 
-            };
-        });
-
-        // رفع البيانات
-        let count = 0;
-        for (const movie of processedMovies) {
-            await addDoc(collection(db, "movies"), movie);
-            count++;
-            this.dom.countBadge.innerText = `Uploading ${count}...`;
-        }
-        alert("مبروك! تم رفع كل الأفلام لقاعدة البيانات بنجاح 🎉");
-    }
-
-    // --- منطق لوحة الأدمن ---
-    openAdminPanel() {
-        this.dom.modal.classList.add('open');
-        // توقع رقم الصورة القادم
-        const maxId = this.state.movies.reduce((max, m) => Math.max(max, m.id || 0), 0);
-        this.dom.nextImageName.textContent = `${maxId + 1}.jpg`;
-        // تغيير نص الزرار
-        this.dom.addMovieBtn.innerText = "Add to Database 🚀";
-    }
-
-    closeAdminPanel() {
-        this.dom.modal.classList.remove('open');
-    }
-
-    async addNewMovie() {
-        const title = this.dom.inputs.title.value;
-        const studio = this.dom.inputs.studio.value;
-        const year = parseInt(this.dom.inputs.year.value);
-        const score = parseFloat(this.dom.inputs.score.value);
-        const rating = this.dom.inputs.rating.value;
-        const durationRaw = parseInt(this.dom.inputs.duration.value); // بالدقائق
-
-        if (!title || !year) {
-            alert("Please fill required fields!");
-            return;
-        }
-
-        this.dom.addMovieBtn.innerText = "Saving...";
-        
-        // حساب لون الشارة
-        let badgeColor;
-        if (rating === "Banned") badgeColor = "#ef4444";
-        else if (rating === "ALL" || rating === "G" || rating === "4+" || rating === "5+") badgeColor = "#22c55e";
-        else if (rating === "PG" || rating === "6+" || rating === "7+" || rating === "8+") badgeColor = "#eab308";
-        else badgeColor = "#f97316";
-
-        // حساب المدة
-        let durationDisplay = durationRaw;
-        if (typeof durationRaw === 'number') {
-            const hours = Math.floor(durationRaw / 60);
-            const minutes = durationRaw % 60;
-            durationDisplay = `${hours}h ${minutes}m`;
-        }
-
-        // حساب الـ ID الجديد
-        const maxId = this.state.movies.reduce((max, m) => Math.max(max, m.id || 0), 0);
-        const newId = maxId + 1;
-        const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
-
-        const newMovieObj = {
-            id: newId,
-            title: title,
-            studio: studio,
-            year: year,
-            image: `${baseUrl}${newId}.jpg`,
-            rating: rating,
-            badgeColor: badgeColor,
-            score: score,
-            duration: durationDisplay,
-            rawDuration: durationRaw
-        };
-
-        try {
-            await addDoc(collection(db, "movies"), newMovieObj);
-            alert(`تم إضافة فيلم ${title} بنجاح! 🎉`);
-            this.closeAdminPanel();
-            this.dom.addMovieBtn.innerText = "Generate JSON Code"; // نرجعه للأصل
-            this.loadMovies(); // تحديث الصفحة
-            
-            // تنظيف الحقول
-            Object.values(this.dom.inputs).forEach(inp => inp.value = '');
-            
-        } catch (e) {
-            console.error(e);
-            alert("Error adding movie: " + e.message);
-            this.dom.addMovieBtn.innerText = "Try Again";
-        }
     }
 
     applyTheme() {
@@ -253,246 +58,6 @@ class MovieApp {
         this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('cinekids_theme', this.state.theme);
         this.applyTheme();
-    }
-
-    applySavedPreferences() {
-        if (this.dom.sortSelect) this.dom.sortSelect.value = this.state.sort;
-        this.dom.filterBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.filter === this.state.filter);
-        });
-    }
-
-    bindEvents() {
-        this.dom.searchInput.addEventListener('input', this.debounce((e) => {
-            const val = e.target.value.toLowerCase(); 
-            
-            // --- الكود السري لفتح الأدمن ---
-            if (e.target.value === "5352009") {
-                this.openAdminPanel();
-                e.target.value = ""; 
-                return;
-            }
-            // ------------------
-
-            this.state.search = val;
-            this.render();
-        }, 300));
-
-        this.dom.filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.dom.filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.state.filter = btn.dataset.filter;
-                this.saveState();
-                this.render();
-            });
-        });
-
-        this.dom.sortSelect.addEventListener('change', (e) => {
-            this.state.sort = e.target.value;
-            this.saveState();
-            this.render();
-        });
-
-        this.dom.resetBtn.addEventListener('click', () => this.reset());
-        this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
-        
-        // أزرار لوحة الأدمن
-        if(this.dom.closeModalBtn) this.dom.closeModalBtn.addEventListener('click', () => this.closeAdminPanel());
-        
-        // تعديل مهم: الزرار دلوقتي بيضيف للداتا بيز مش بيعمل JSON
-        if(this.dom.addMovieBtn) {
-            // نشيل أي مستمع قديم (لو موجود) ونحط الجديد
-            const newBtn = this.dom.addMovieBtn.cloneNode(true);
-            this.dom.addMovieBtn.parentNode.replaceChild(newBtn, this.dom.addMovieBtn);
-            this.dom.addMovieBtn = newBtn;
-            
-            this.dom.addMovieBtn.addEventListener('click', () => this.addNewMovie());
-        }
-    }
-
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    saveState() {
-        localStorage.setItem('cinekids_prefs', JSON.stringify({
-            filter: this.state.filter,
-            sort: this.state.sort
-        }));
-        localStorage.setItem('cinekids_favorites', JSON.stringify(this.state.favorites));
-    }
-
-    reset() {
-        this.state.filter = 'all';
-        this.state.sort = 'newest';
-        this.state.search = '';
-        this.dom.searchInput.value = '';
-        this.applySavedPreferences();
-        this.saveState();
-        this.render();
-    }
-
-    toggleFavorite(movie) {
-        const index = this.state.favorites.indexOf(movie.id);
-        if (index === -1) {
-            this.state.favorites.push(movie.id);
-        } else {
-            this.state.favorites.splice(index, 1);
-        }
-        this.saveState();
-        if (this.state.filter === 'favorites') {
-            this.render();
-        } else {
-            const btn = document.getElementById(`fav-btn-${movie.id}`);
-            if (btn) btn.classList.toggle('active');
-        }
-    }
-
-    getFilteredAndSortedMovies() {
-        let result = this.state.movies;
-        if (this.state.search) {
-            result = result.filter(m => m.title.toLowerCase().includes(this.state.search));
-        }
-        if (this.state.filter === 'favorites') {
-            result = result.filter(m => this.state.favorites.includes(m.id));
-        } else if (this.state.filter !== 'all') {
-            result = result.filter(m => m.studio === this.state.filter);
-        }
-        
-        const sortStrategies = {
-            'newest': (a, b) => b.year - a.year,
-            'oldest': (a, b) => a.year - b.year,
-            'az': (a, b) => a.title.localeCompare(b.title),
-            'rating': (a, b) => b.score - a.score
-        };
-        return [...result].sort(sortStrategies[this.state.sort]);
-    }
-
-    render() {
-        const movies = this.getFilteredAndSortedMovies();
-        this.dom.grid.innerHTML = '';
-        const fragment = document.createDocumentFragment();
-        
-        if (movies.length === 0 && this.state.movies.length > 0) {
-            this.renderEmptyState(fragment);
-        } else if(movies.length > 0) {
-            movies.forEach((movie, index) => {
-                const card = this.createMovieCard(movie, index);
-                fragment.appendChild(card);
-            });
-        }
-        this.dom.grid.appendChild(fragment);
-    }
-
-    renderEmptyState(fragment) {
-        const div = document.createElement('div');
-        div.className = 'empty-state';
-        const msg = this.state.filter === 'favorites' ? "No favorites yet 💔" : "No movies found";
-        const sub = this.state.filter === 'favorites' ? "Click the heart icon to add movies!" : "Try adjusting your search or filters";
-        div.innerHTML = `
-            <div class="empty-state-icon">${this.state.filter === 'favorites' ? '💔' : '🔍'}</div>
-            <h3>${msg}</h3>
-            <p>${sub}</p>
-        `;
-        fragment.appendChild(div);
-    }
-
-    createMovieCard(movie, index) {
-        const card = document.createElement('div');
-        card.className = 'movie-card';
-        card.tabIndex = 0;
-        card.style.transitionDelay = `${Math.min(index * 0.015, 0.5)}s`;
-        const posterWrapper = document.createElement('div');
-        posterWrapper.className = 'poster-wrapper';
-        const favBtn = document.createElement('button');
-        favBtn.className = 'fav-btn';
-        favBtn.id = `fav-btn-${movie.id}`;
-        favBtn.setAttribute('aria-label', `Add ${movie.title} to favorites`);
-        favBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" /></svg>`;
-        if (this.state.favorites.includes(movie.id)) {
-            favBtn.classList.add('active');
-        }
-        favBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleFavorite(movie);
-        });
-        const badgesContainer = document.createElement('div');
-        badgesContainer.className = 'badges-container';
-        const ageBadge = document.createElement('span');
-        ageBadge.className = 'age-badge';
-        ageBadge.textContent = movie.rating;
-        ageBadge.style.borderColor = movie.badgeColor;
-        ageBadge.style.color = movie.badgeColor;
-        const studioBadge = document.createElement('span');
-        studioBadge.className = 'studio-badge';
-        studioBadge.textContent = movie.studio;
-        const studioColor = this.studioColors[movie.studio] || '#64748b';
-        studioBadge.style.background = studioColor;
-        if (['Illumination', 'Pixar', 'Laika'].includes(movie.studio)) {
-            studioBadge.style.color = '#333';
-        } else {
-            studioBadge.style.color = '#fff';
-        }
-        badgesContainer.append(ageBadge, studioBadge);
-        const img = document.createElement('img');
-        img.src = movie.image;
-        img.alt = movie.title;
-        img.loading = 'lazy';
-        img.onerror = function() {
-            const bg = this.state.theme === 'dark' ? '%231e293b' : '%23ffffff';
-            const text = this.state.theme === 'dark' ? '%23f8fafc' : '%230f172a';
-            this.src = `data:image/svg+xml,${encodeURIComponent(`
-                <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600">
-                    <rect fill="${bg}" width="400" height="600"/>
-                    <text fill="${text}" font-family="Arial, sans-serif" font-size="24" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">${movie.title}</text>
-                </svg>
-            `)}`;
-        }.bind(this);
-        posterWrapper.append(favBtn, badgesContainer, img);
-        const content = document.createElement('div');
-        content.className = 'card-content';
-        const title = document.createElement('h3');
-        title.className = 'movie-title';
-        title.textContent = movie.title;
-        title.title = movie.title;
-        const year = document.createElement('span');
-        year.className = 'movie-year';
-        year.textContent = movie.year;
-        const metaInfo = document.createElement('div');
-        metaInfo.className = 'meta-info';
-        const ratingBox = document.createElement('div');
-        ratingBox.className = 'rating-box';
-        ratingBox.innerHTML = `★ ${movie.score}`;
-        const durationBox = document.createElement('div');
-        durationBox.className = 'duration-box';
-        durationBox.innerHTML = `
-            <svg class="duration-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 1,1 20,12A8,8 0 0,1 12,20M12.5,7H11V13L16.25,16.15L17,14.92L12.5,12.25V7Z" />
-            </svg>
-            ${movie.duration}
-        `;
-        metaInfo.append(ratingBox, durationBox);
-        content.append(title, year, metaInfo);
-        card.append(posterWrapper, content);
-        requestAnimationFrame(() => {
-            setTimeout(() => card.classList.add('visible'), 50);
-        });
-        return card;
-    }
-
-    // دوال البيانات القديمة (تستخدم فقط في أول مرة للرفع)
-    async getInitialData() {
-        const response = await fetch('movies.json');
-        return await response.json();
     }
 
     getFirst157Data() {
@@ -706,4 +271,360 @@ class MovieApp {
             "The Bad Guys 2": { r: "PG", s: 6.5, d: 105 }
         };
     }
+    getOfficialData() {
+        return {
+            "Return to Never Land": { r: "G", s: 5.7, d: 72 },
+            "Tarzan & Jane": { r: "G", s: 5.5, d: 72 },
+            "Stuart Little 2": { r: "PG", s: 5.9, d: 78 },
+            "The Jungle Book 2": { r: "G", s: 5.7, d: 72 },
+            "Atlantis: Milo's Return": { r: "PG", s: 5.4, d: 72 },
+            "Stitch! The Movie": { r: "PG", s: 5.7, d: 60 },
+            "The Lion King 1 1/2: Hakuna Matata": { r: "G", s: 6.7, d: 77 },
+            "Mulan II": { r: "G", s: 5.2, d: 79 },
+            "Stuart Little 3: Call of the Wild": { r: "G", s: 4.8, d: 75 },
+            "Tarzan II": { r: "G", s: 5.5, d: 72 },
+            "Kronk's New Groove": { r: "G", s: 6.0, d: 75 },
+            "Lilo & Stitch 2: Stitch Has a Glitch": { r: "G", s: 5.8, d: 68 },
+            "Bambi II": { r: "G", s: 6.7, d: 72 },
+            "Brother Bear 2": { r: "G", s: 5.7, d: 73 },
+            "Cinderella III": { r: "G", s: 6.7, d: 72 },
+            "Shrek the Third": { r: "PG", s: 6.1, d: 92 },
+            "Open Season 2": { r: "G", s: 5.1, d: 76 },
+            "Madagascar: Escape 2 Africa": { r: "PG", s: 6.6, d: 89 },
+            "Open Season 3": { r: "G", s: 4.9, d: 75 },
+            "Shrek Forever After": { r: "PG", s: 6.3, d: 93 },
+            "Cars 2": { r: "G", s: 6.2, d: 106 },
+            "Kung Fu Panda 2": { r: "PG", s: 7.2, d: 91 },
+            "Madagascar 3: Europe's Most Wanted": { r: "PG", s: 6.8, d: 93 },
+            "Cloudy with a Chance of Meatballs 2": { r: "PG", s: 6.5, d: 94 },
+            "The Smurfs 2": { r: "PG", s: 5.4, d: 105 },
+            "How to Train Your Dragon 2": { r: "PG", s: 7.8, d: 102 },
+            "Open Season: Scared Silly": { r: "G", s: 4.3, d: 85 },
+            "Kung Fu Panda 3": { r: "PG", s: 7.1, d: 95 },
+            "Smurfs: The Lost Village": { r: "PG", s: 6.0, d: 90 },
+            "Surf's Up 2: WaveMania": { r: "PG", s: 4.8, d: 85 },
+            "The Lego Movie 2: The Second Part": { r: "PG", s: 6.6, d: 107 },
+            "Toy Story 4": { r: "G", s: 7.7, d: 100 },
+            "Ralph Breaks the Internet": { r: "PG", s: 7.2, d: 112 },
+            "Hotel Transylvania 3: Summer Vacation": { r: "PG", s: 6.3, d: 97 },
+            "Frozen 2": { r: "PG", s: 7.4, d: 103 },
+            "The Angry Birds Movie 2": { r: "PG", s: 6.5, d: 99 },
+            "How to Train Your Dragon: The Hidden World": { r: "PG", s: 7.6, d: 104 },
+            "Trolls World Tour": { r: "PG", s: 5.9, d: 90 },
+            "The Croods: A New Age": { r: "PG", s: 7.4, d: 95 },
+            "Spirit Untamed": { r: "PG", s: 5.7, d: 84 },
+            "The Boss Baby: Family Business": { r: "PG", s: 5.9, d: 98 },
+            "Peter Rabbit 2: The Runaway": { r: "PG", s: 6.7, d: 99 },
+            "Hotel Transylvania: Transformania": { r: "PG", s: 5.9, d: 87 },
+            "Trolls Band Together": { r: "PG", s: 6.1, d: 91 },
+            "Kung Fu Panda 4": { r: "PG", s: 6.8, d: 94 },
+            "Megamind vs. the Doom Syndicate": { r: "PG", s: 3.4, d: 92 },
+            "Despicable Me 4": { r: "PG", s: 6.2, d: 95 },
+            "Moana 2": { r: "PG", s: 7.5, d: 100 },
+            "Zootopia 2": { r: "PG", s: 7.5, d: 108 },
+            "The Bad Guys 2": { r: "PG", s: 6.5, d: 105 }
+        };
+    }
+
+    async generateDB() {
+        // 1. Fetch data from external JSON file
+        const response = await fetch('movies.json');
+        const rawData = await response.json();
+
+        const customData = this.getFirst157Data();
+        const officialData = this.getOfficialData();
+        
+        // Cloudinary URL (Updated)
+        const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
+
+        return rawData.map((m, i) => {
+            let r, s, d;
+            if (customData[m.t]) {
+                const data = customData[m.t];
+                r = data.r; s = data.s; d = data.d;
+            } else if (officialData[m.t]) {
+                const data = officialData[m.t];
+                r = data.r; s = data.s; d = data.d;
+            } else {
+                r = "G"; s = 7.0; d = 90;
+            }
+
+            let badgeColor;
+            if (r === "Banned") {
+                badgeColor = "#ef4444";
+            } else if (r === "ALL" || r === "G" || r === "4+" || r === "5+") {
+                badgeColor = "#22c55e";
+            } else if (r === "PG" || r === "6+" || r === "7+" || r === "8+") {
+                badgeColor = "#eab308";
+            } else {
+                badgeColor = "#f97316";
+            }
+
+            let durationDisplay = d;
+            if (typeof d === 'number') {
+                const hours = Math.floor(d / 60);
+                const minutes = d % 60;
+                durationDisplay = `${hours}h ${minutes}m`;
+            }
+
+            return {
+                id: i + 1,
+                title: m.t,
+                studio: m.s,
+                year: m.y,
+                image: `${baseUrl}${i + 1}.jpg`,
+                rating: r,
+                badgeColor: badgeColor,
+                score: s,
+                duration: durationDisplay
+            };
+        });
+    }
+
+    applySavedPreferences() {
+        if (this.dom.sortSelect) this.dom.sortSelect.value = this.state.sort;
+        this.dom.filterBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.filter === this.state.filter);
+        });
+    }
+
+    bindEvents() {
+        this.dom.searchInput.addEventListener('input', this.debounce((e) => {
+            this.state.search = e.target.value.toLowerCase();
+            this.render();
+        }, 300));
+
+        this.dom.filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.dom.filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.state.filter = btn.dataset.filter;
+                this.saveState();
+                this.render();
+            });
+        });
+
+        this.dom.sortSelect.addEventListener('change', (e) => {
+            this.state.sort = e.target.value;
+            this.saveState();
+            this.render();
+        });
+
+        this.dom.resetBtn.addEventListener('click', () => this.reset());
+
+        this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
+    }
+
+    // إصلاح دالة debounce
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    saveState() {
+        localStorage.setItem('cinekids_prefs', JSON.stringify({
+            filter: this.state.filter,
+            sort: this.state.sort
+        }));
+        // حفظ المفضلات
+        localStorage.setItem('cinekids_favorites', JSON.stringify(this.state.favorites));
+    }
+
+    reset() {
+        this.state.filter = 'all';
+        this.state.sort = 'newest';
+        this.state.search = '';
+        this.dom.searchInput.value = '';
+        this.applySavedPreferences();
+        this.saveState();
+        this.render();
+    }
+
+    // دالة التبديل للمفضلة
+    toggleFavorite(movie) {
+        const index = this.state.favorites.indexOf(movie.id);
+        if (index === -1) {
+            this.state.favorites.push(movie.id);
+        } else {
+            this.state.favorites.splice(index, 1);
+        }
+        this.saveState();
+        // إذا كنا في وضع عرض المفضلة، يجب إعادة الرسم لإخفاء الفيلم المحذوف
+        if (this.state.filter === 'favorites') {
+            this.render();
+        } else {
+            // تحديث الزر فقط بدون إعادة تحميل كل شيء (أداء أفضل)
+            const btn = document.getElementById(`fav-btn-${movie.id}`);
+            if (btn) btn.classList.toggle('active');
+        }
+    }
+
+    getFilteredAndSortedMovies() {
+        let result = this.state.movies;
+        if (this.state.search) {
+            result = result.filter(m => m.title.toLowerCase().includes(this.state.search));
+        }
+        if (this.state.filter === 'favorites') {
+            // فلتر المفضلات
+            result = result.filter(m => this.state.favorites.includes(m.id));
+        } else if (this.state.filter !== 'all') {
+            result = result.filter(m => m.studio === this.state.filter);
+        }
+        const sortStrategies = {
+            'newest': (a, b) => b.year - a.year,
+            'oldest': (a, b) => a.year - b.year,
+            'az': (a, b) => a.title.localeCompare(b.title),
+            'rating': (a, b) => b.score - a.score
+        };
+        return [...result].sort(sortStrategies[this.state.sort]);
+    }
+
+    render() {
+        const movies = this.getFilteredAndSortedMovies();
+        this.dom.countBadge.innerText = `${movies.length} Movies`;
+        this.dom.grid.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+        if (movies.length === 0) {
+            this.renderEmptyState(fragment);
+        } else {
+            movies.forEach((movie, index) => {
+                const card = this.createMovieCard(movie, index);
+                fragment.appendChild(card);
+            });
+        }
+        this.dom.grid.appendChild(fragment);
+    }
+
+    renderEmptyState(fragment) {
+        const div = document.createElement('div');
+        div.className = 'empty-state';
+        const msg = this.state.filter === 'favorites' ? "No favorites yet 💔" : "No movies found";
+        const sub = this.state.filter === 'favorites' ? "Click the heart icon to add movies!" : "Try adjusting your search or filters";
+        div.innerHTML = `
+            <div class="empty-state-icon">${this.state.filter === 'favorites' ? '💔' : '🔍'}</div>
+            <h3>${msg}</h3>
+            <p>${sub}</p>
+        `;
+        fragment.appendChild(div);
+    }
+
+    createMovieCard(movie, index) {
+        const card = document.createElement('div');
+        card.className = 'movie-card';
+        card.tabIndex = 0;
+        card.style.transitionDelay = `${Math.min(index * 0.015, 0.5)}s`;
+        const posterWrapper = document.createElement('div');
+        posterWrapper.className = 'poster-wrapper';
+        
+        // 1. زر المفضلة
+        const favBtn = document.createElement('button');
+        favBtn.className = 'fav-btn';
+        favBtn.id = `fav-btn-${movie.id}`;
+        favBtn.setAttribute('aria-label', `Add ${movie.title} to favorites`);
+        
+        // SVG للقلب
+        favBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" /></svg>`;
+        
+        if (this.state.favorites.includes(movie.id)) {
+            favBtn.classList.add('active');
+        }
+        
+        favBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // منع فتح تفاصيل الفيلم عند الضغط على الزر
+            this.toggleFavorite(movie);
+        });
+
+        const badgesContainer = document.createElement('div');
+        badgesContainer.className = 'badges-container';
+        
+        const ageBadge = document.createElement('span');
+        ageBadge.className = 'age-badge';
+        ageBadge.textContent = movie.rating;
+        ageBadge.style.borderColor = movie.badgeColor;
+        ageBadge.style.color = movie.badgeColor;
+        
+        const studioBadge = document.createElement('span');
+        studioBadge.className = 'studio-badge';
+        studioBadge.textContent = movie.studio;
+        const studioColor = this.studioColors[movie.studio] || '#64748b';
+        studioBadge.style.background = studioColor;
+        
+        if (['Illumination', 'Pixar', 'Laika'].includes(movie.studio)) {
+            studioBadge.style.color = '#333';
+        } else {
+            studioBadge.style.color = '#fff';
+        }
+        
+        badgesContainer.append(ageBadge, studioBadge);
+        
+        const img = document.createElement('img');
+        img.src = movie.image;
+        img.alt = movie.title;
+        img.loading = 'lazy';
+        
+        // تحسين fallback image مع SVG inline
+        img.onerror = function() {
+            const bg = this.state.theme === 'dark' ? '%231e293b' : '%23ffffff';
+            const text = this.state.theme === 'dark' ? '%23f8fafc' : '%230f172a';
+            this.src = `data:image/svg+xml,${encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600">
+                    <rect fill="${bg}" width="400" height="600"/>
+                    <text fill="${text}" font-family="Arial, sans-serif" font-size="24" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">${movie.title}</text>
+                </svg>
+            `)}`;
+        }.bind(this);
+        
+        // إضافة الزر والبادجات للصورة
+        posterWrapper.append(favBtn, badgesContainer, img);
+        
+        const content = document.createElement('div');
+        content.className = 'card-content';
+        
+        const title = document.createElement('h3');
+        title.className = 'movie-title';
+        title.textContent = movie.title;
+        title.title = movie.title;
+        
+        const year = document.createElement('span');
+        year.className = 'movie-year';
+        year.textContent = movie.year;
+        
+        const metaInfo = document.createElement('div');
+        metaInfo.className = 'meta-info';
+        
+        const ratingBox = document.createElement('div');
+        ratingBox.className = 'rating-box';
+        ratingBox.innerHTML = `★ ${movie.score}`;
+        
+        const durationBox = document.createElement('div');
+        durationBox.className = 'duration-box';
+        
+        durationBox.innerHTML = `
+            <svg class="duration-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 1,1 20,12A8,8 0 0,1 12,20M12.5,7H11V13L16.25,16.15L17,14.92L12.5,12.25V7Z" />
+            </svg>
+            ${movie.duration}
+        `;
+        
+        metaInfo.append(ratingBox, durationBox);
+        content.append(title, year, metaInfo);
+        card.append(posterWrapper, content);
+        
+        requestAnimationFrame(() => {
+            setTimeout(() => card.classList.add('visible'), 50);
+        });
+        
+        return card;
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    new MovieApp();
+});

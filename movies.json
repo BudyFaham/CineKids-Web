@@ -2,1035 +2,1665 @@
     {
         "t": "The Lion King",
         "s": "Disney",
-        "y": 1994
+        "y": 1994,
+        "rating": "8+",
+        "score": 8.5,
+        "duration": "1h 28m"
     },
     {
         "t": "Frozen",
         "s": "Disney",
-        "y": 2013
+        "y": 2013,
+        "rating": "5+",
+        "score": 7.4,
+        "duration": "1h 42m"
     },
     {
         "t": "Moana",
         "s": "Disney",
-        "y": 2016
+        "y": 2016,
+        "rating": "6+",
+        "score": 7.6,
+        "duration": "1h 47m"
     },
     {
         "t": "Aladdin",
         "s": "Disney",
-        "y": 1992
+        "y": 1992,
+        "rating": "6+",
+        "score": 8.0,
+        "duration": "1h 30m"
     },
     {
         "t": "Beauty and the Beast",
         "s": "Disney",
-        "y": 1991
+        "y": 1991,
+        "rating": "6+",
+        "score": 8.0,
+        "duration": "1h 24m"
     },
     {
         "t": "Zootopia",
         "s": "Disney",
-        "y": 2016
+        "y": 2016,
+        "rating": "8+",
+        "score": 8.0,
+        "duration": "1h 48m"
     },
     {
         "t": "Encanto",
         "s": "Disney",
-        "y": 2021
+        "y": 2021,
+        "rating": "6+",
+        "score": 7.2,
+        "duration": "1h 42m"
     },
     {
         "t": "Mulan",
         "s": "Disney",
-        "y": 1998
+        "y": 1998,
+        "rating": "5+",
+        "score": 7.7,
+        "duration": "1h 27m"
     },
     {
         "t": "Wreck-It Ralph",
         "s": "Disney",
-        "y": 2012
+        "y": 2012,
+        "rating": "7+",
+        "score": 7.7,
+        "duration": "1h 41m"
     },
     {
         "t": "Big Hero 6",
         "s": "Disney",
-        "y": 2014
+        "y": 2014,
+        "rating": "7+",
+        "score": 7.8,
+        "duration": "1h 42m"
     },
     {
         "t": "Tangled",
         "s": "Disney",
-        "y": 2010
+        "y": 2010,
+        "rating": "5+",
+        "score": 7.7,
+        "duration": "1h 40m"
     },
     {
         "t": "Hercules",
         "s": "Disney",
-        "y": 1997
+        "y": 1997,
+        "rating": "7+",
+        "score": 7.3,
+        "duration": "1h 33m"
     },
     {
         "t": "Tarzan",
         "s": "Disney",
-        "y": 1999
+        "y": 1999,
+        "rating": "6+",
+        "score": 7.3,
+        "duration": "1h 28m"
     },
     {
         "t": "Pocahontas",
         "s": "Disney",
-        "y": 1995
+        "y": 1995,
+        "rating": "6+",
+        "score": 6.7,
+        "duration": "1h 21m"
     },
     {
         "t": "The Princess and the Frog",
         "s": "Disney",
-        "y": 2009
+        "y": 2009,
+        "rating": "6+",
+        "score": 7.2,
+        "duration": "1h 37m"
     },
     {
         "t": "Lilo & Stitch",
         "s": "Disney",
-        "y": 2002
+        "y": 2002,
+        "rating": "6+",
+        "score": 7.4,
+        "duration": "1h 25m"
     },
     {
         "t": "Treasure Planet",
         "s": "Disney",
-        "y": 2002
+        "y": 2002,
+        "rating": "8+",
+        "score": 7.2,
+        "duration": "1h 35m"
     },
     {
         "t": "Atlantis: The Lost Empire",
         "s": "Disney",
-        "y": 2001
+        "y": 2001,
+        "rating": "8+",
+        "score": 6.9,
+        "duration": "1h 35m"
     },
     {
         "t": "Raya and the Last Dragon",
         "s": "Disney",
-        "y": 2021
+        "y": 2021,
+        "rating": "8+",
+        "score": 7.3,
+        "duration": "1h 47m"
     },
     {
         "t": "Strange World",
         "s": "Disney",
-        "y": 2022
+        "y": 2022,
+        "rating": "Banned",
+        "score": 5.7,
+        "duration": "1h 42m"
     },
     {
         "t": "Brother Bear",
         "s": "Disney",
-        "y": 2003
+        "y": 2003,
+        "rating": "5+",
+        "score": 6.9,
+        "duration": "1h 25m"
     },
     {
         "t": "The Emperor's New Groove",
         "s": "Disney",
-        "y": 2000
+        "y": 2000,
+        "rating": "6+",
+        "score": 7.4,
+        "duration": "1h 18m"
     },
     {
         "t": "Pinocchio",
         "s": "Disney",
-        "y": 1940
+        "y": 1940,
+        "rating": "6+",
+        "score": 7.5,
+        "duration": "1h 28m"
     },
     {
         "t": "Peter Pan",
         "s": "Disney",
-        "y": 1953
+        "y": 1953,
+        "rating": "7+",
+        "score": 7.3,
+        "duration": "1h 17m"
     },
     {
         "t": "Alice in Wonderland",
         "s": "Disney",
-        "y": 1951
+        "y": 1951,
+        "rating": "4+",
+        "score": 7.3,
+        "duration": "1h 15m"
     },
     {
         "t": "Cinderella",
         "s": "Disney",
-        "y": 1950
+        "y": 1950,
+        "rating": "4+",
+        "score": 7.3,
+        "duration": "1h 14m"
     },
     {
         "t": "Bambi",
         "s": "Disney",
-        "y": 1942
+        "y": 1942,
+        "rating": "5+",
+        "score": 7.3,
+        "duration": "1h 9m"
     },
     {
         "t": "Dumbo",
         "s": "Disney",
-        "y": 1941
+        "y": 1941,
+        "rating": "5+",
+        "score": 7.2,
+        "duration": "1h 4m"
     },
     {
         "t": "Snow White",
         "s": "Disney",
-        "y": 1937
+        "y": 1937,
+        "rating": "6+",
+        "score": 7.6,
+        "duration": "1h 23m"
     },
     {
         "t": "The Jungle Book",
         "s": "Disney",
-        "y": 1967
+        "y": 1967,
+        "rating": "5+",
+        "score": 7.6,
+        "duration": "1h 18m"
     },
     {
         "t": "Toy Story",
         "s": "Pixar",
-        "y": 1995
+        "y": 1995,
+        "rating": "5+",
+        "score": 8.3,
+        "duration": "1h 21m"
     },
     {
         "t": "Finding Nemo",
         "s": "Pixar",
-        "y": 2003
+        "y": 2003,
+        "rating": "5+",
+        "score": 8.2,
+        "duration": "1h 40m"
     },
     {
         "t": "Monsters, Inc.",
         "s": "Pixar",
-        "y": 2001
+        "y": 2001,
+        "rating": "5+",
+        "score": 8.1,
+        "duration": "1h 32m"
     },
     {
         "t": "The Incredibles",
         "s": "Pixar",
-        "y": 2004
+        "y": 2004,
+        "rating": "7+",
+        "score": 8.0,
+        "duration": "1h 55m"
     },
     {
         "t": "Cars",
         "s": "Pixar",
-        "y": 2006
+        "y": 2006,
+        "rating": "5+",
+        "score": 7.3,
+        "duration": "1h 56m"
     },
     {
         "t": "Ratatouille",
         "s": "Pixar",
-        "y": 2007
+        "y": 2007,
+        "rating": "6+",
+        "score": 8.1,
+        "duration": "1h 51m"
     },
     {
         "t": "WALL-E",
         "s": "Pixar",
-        "y": 2008
+        "y": 2008,
+        "rating": "5+",
+        "score": 8.4,
+        "duration": "1h 38m"
     },
     {
         "t": "Up",
         "s": "Pixar",
-        "y": 2009
+        "y": 2009,
+        "rating": "6+",
+        "score": 8.3,
+        "duration": "1h 36m"
     },
     {
         "t": "Coco",
         "s": "Pixar",
-        "y": 2017},
+        "y": 2017,
+        "rating": "7+",
+        "score": 8.4,
+        "duration": "1h 45m"
+    },
     {
         "t": "Inside Out",
         "s": "Pixar",
-        "y": 2015
+        "y": 2015,
+        "rating": "6+",
+        "score": 8.1,
+        "duration": "1h 35m"
     },
     {
         "t": "Toy Story 2",
         "s": "Pixar",
-        "y": 1999
+        "y": 1999,
+        "rating": "5+",
+        "score": 7.9,
+        "duration": "1h 32m"
     },
     {
         "t": "Toy Story 3",
         "s": "Pixar",
-        "y": 2010
+        "y": 2010,
+        "rating": "6+",
+        "score": 8.3,
+        "duration": "1h 43m"
     },
     {
         "t": "Monsters University",
         "s": "Pixar",
-        "y": 2013
+        "y": 2013,
+        "rating": "5+",
+        "score": 7.2,
+        "duration": "1h 44m"
     },
     {
         "t": "Finding Dory",
         "s": "Pixar",
-        "y": 2016
+        "y": 2016,
+        "rating": "6+",
+        "score": 7.2,
+        "duration": "1h 37m"
     },
     {
         "t": "Cars 3",
         "s": "Pixar",
-        "y": 2017
+        "y": 2017,
+        "rating": "6+",
+        "score": 6.7,
+        "duration": "1h 42m"
     },
     {
         "t": "Incredibles 2",
         "s": "Pixar",
-        "y": 2018
+        "y": 2018,
+        "rating": "8+",
+        "score": 7.5,
+        "duration": "1h 58m"
     },
     {
         "t": "Onward",
         "s": "Pixar",
-        "y": 2020
+        "y": 2020,
+        "rating": "Banned",
+        "score": 7.4,
+        "duration": "1h 42m"
     },
     {
         "t": "Soul",
         "s": "Pixar",
-        "y": 2020
+        "y": 2020,
+        "rating": "8+",
+        "score": 8.0,
+        "duration": "1h 40m"
     },
     {
         "t": "Luca",
         "s": "Pixar",
-        "y": 2021
+        "y": 2021,
+        "rating": "6+",
+        "score": 7.4,
+        "duration": "1h 35m"
     },
     {
         "t": "Turning Red",
         "s": "Pixar",
-        "y": 2022
+        "y": 2022,
+        "rating": "10+",
+        "score": 6.9,
+        "duration": "1h 40m"
     },
     {
         "t": "Lightyear",
         "s": "Pixar",
-        "y": 2022
+        "y": 2022,
+        "rating": "Banned",
+        "score": 6.1,
+        "duration": "1h 45m"
     },
     {
         "t": "Elemental",
         "s": "Pixar",
-        "y": 2023
+        "y": 2023,
+        "rating": "6+",
+        "score": 7.0,
+        "duration": "1h 41m"
     },
     {
         "t": "The Good Dinosaur",
         "s": "Pixar",
-        "y": 2015
+        "y": 2015,
+        "rating": "7+",
+        "score": 6.7,
+        "duration": "1h 33m"
     },
     {
         "t": "Brave",
         "s": "Pixar",
-        "y": 2012
+        "y": 2012,
+        "rating": "8+",
+        "score": 7.1,
+        "duration": "1h 33m"
     },
     {
         "t": "Inside Out 2",
         "s": "Pixar",
-        "y": 2024
+        "y": 2024,
+        "rating": "6+",
+        "score": 7.5,
+        "duration": "1h 36m"
     },
     {
         "t": "Shrek",
         "s": "DreamWorks",
-        "y": 2001
+        "y": 2001,
+        "rating": "6+",
+        "score": 7.9,
+        "duration": "1h 30m"
     },
     {
         "t": "How to Train Your Dragon",
         "s": "DreamWorks",
-        "y": 2010
+        "y": 2010,
+        "rating": "6+",
+        "score": 8.1,
+        "duration": "1h 38m"
     },
     {
         "t": "Kung Fu Panda",
         "s": "DreamWorks",
-        "y": 2008
+        "y": 2008,
+        "rating": "6+",
+        "score": 7.6,
+        "duration": "1h 32m"
     },
     {
         "t": "Madagascar",
         "s": "DreamWorks",
-        "y": 2005
+        "y": 2005,
+        "rating": "7+",
+        "score": 6.9,
+        "duration": "1h 26m"
     },
     {
         "t": "Shrek 2",
         "s": "DreamWorks",
-        "y": 2004
+        "y": 2004,
+        "rating": "6+",
+        "score": 7.4,
+        "duration": "1h 33m"
     },
     {
         "t": "Puss in Boots",
         "s": "DreamWorks",
-        "y": 2011
+        "y": 2011,
+        "rating": "6+",
+        "score": 6.6,
+        "duration": "1h 30m"
     },
     {
         "t": "Puss in Boots: The Last Wish",
         "s": "DreamWorks",
-        "y": 2022
+        "y": 2022,
+        "rating": "8+",
+        "score": 7.8,
+        "duration": "1h 42m"
     },
     {
         "t": "The Bad Guys",
         "s": "DreamWorks",
-        "y": 2022
+        "y": 2022,
+        "rating": "6+",
+        "score": 6.9,
+        "duration": "1h 40m"
     },
     {
         "t": "Megamind",
         "s": "DreamWorks",
-        "y": 2010
+        "y": 2010,
+        "rating": "6+",
+        "score": 7.3,
+        "duration": "1h 35m"
     },
     {
         "t": "Rise of the Guardians",
         "s": "DreamWorks",
-        "y": 2012
+        "y": 2012,
+        "rating": "7+",
+        "score": 7.2,
+        "duration": "1h 37m"
     },
     {
         "t": "The Croods",
         "s": "DreamWorks",
-        "y": 2013
+        "y": 2013,
+        "rating": "8+",
+        "score": 7.1,
+        "duration": "1h 38m"
     },
     {
         "t": "Trolls",
         "s": "DreamWorks",
-        "y": 2016
+        "y": 2016,
+        "rating": "6+",
+        "score": 6.4,
+        "duration": "1h 32m"
     },
     {
         "t": "The Boss Baby",
         "s": "DreamWorks",
-        "y": 2017
+        "y": 2017,
+        "rating": "6+",
+        "score": 6.3,
+        "duration": "1h 37m"
     },
     {
         "t": "Monsters vs. Aliens",
         "s": "DreamWorks",
-        "y": 2009
+        "y": 2009,
+        "rating": "7+",
+        "score": 6.4,
+        "duration": "1h 34m"
     },
     {
         "t": "Shark Tale",
         "s": "DreamWorks",
-        "y": 2004
+        "y": 2004,
+        "rating": "8+",
+        "score": 6.0,
+        "duration": "1h 30m"
     },
     {
         "t": "Antz",
         "s": "DreamWorks",
-        "y": 1998
+        "y": 1998,
+        "rating": "8+",
+        "score": 6.5,
+        "duration": "1h 23m"
     },
     {
         "t": "The Prince of Egypt",
         "s": "DreamWorks",
-        "y": 1998
+        "y": 1998,
+        "rating": "8+",
+        "score": 7.2,
+        "duration": "1h 39m"
     },
     {
         "t": "The Road to El Dorado",
         "s": "DreamWorks",
-        "y": 2000
+        "y": 2000,
+        "rating": "7+",
+        "score": 6.9,
+        "duration": "1h 29m"
     },
     {
         "t": "Spirit: Stallion of the Cimarron",
         "s": "DreamWorks",
-        "y": 2002
+        "y": 2002,
+        "rating": "7+",
+        "score": 7.2,
+        "duration": "1h 23m"
     },
     {
         "t": "Sinbad: Legend of the Seven Seas",
         "s": "DreamWorks",
-        "y": 2003
+        "y": 2003,
+        "rating": "8+",
+        "score": 6.8,
+        "duration": "1h 28m"
     },
     {
         "t": "Over the Hedge",
         "s": "DreamWorks",
-        "y": 2006
+        "y": 2006,
+        "rating": "5+",
+        "score": 6.7,
+        "duration": "1h 23m"
     },
     {
         "t": "Bee Movie",
         "s": "DreamWorks",
-        "y": 2007
+        "y": 2007,
+        "rating": "7+",
+        "score": 6.1,
+        "duration": "1h 31m"
     },
     {
         "t": "Penguins of Madagascar",
         "s": "DreamWorks",
-        "y": 2014
+        "y": 2014,
+        "rating": "7+",
+        "score": 6.6,
+        "duration": "1h 32m"
     },
     {
         "t": "Home",
         "s": "DreamWorks",
-        "y": 2015
+        "y": 2015,
+        "rating": "6+",
+        "score": 6.5,
+        "duration": "1h 34m"
     },
     {
         "t": "Abominable",
         "s": "DreamWorks",
-        "y": 2019
+        "y": 2019,
+        "rating": "8+",
+        "score": 7.0,
+        "duration": "1h 37m"
     },
     {
         "t": "Klaus",
         "s": "Netflix",
-        "y": 2019
+        "y": 2019,
+        "rating": "6+",
+        "score": 8.2,
+        "duration": "1h 36m"
     },
     {
         "t": "The Sea Beast",
         "s": "Netflix",
-        "y": 2022
+        "y": 2022,
+        "rating": "8+",
+        "score": 7.0,
+        "duration": "1h 55m"
     },
     {
         "t": "Over the Moon",
         "s": "Netflix",
-        "y": 2020
+        "y": 2020,
+        "rating": "6+",
+        "score": 6.3,
+        "duration": "1h 35m"
     },
     {
         "t": "The Willoughbys",
         "s": "Netflix",
-        "y": 2020
+        "y": 2020,
+        "rating": "8+",
+        "score": 6.4,
+        "duration": "1h 30m"
     },
     {
         "t": "Wish Dragon",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "8+",
+        "score": 7.2,
+        "duration": "1h 38m"
     },
     {
         "t": "Back to the Outback",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "8+",
+        "score": 6.5,
+        "duration": "1h 35m"
     },
     {
         "t": "Spider-Man: Into the Spider-Verse",
         "s": "Sony",
-        "y": 2018
+        "y": 2018,
+        "rating": "9+",
+        "score": 8.4,
+        "duration": "1h 57m"
     },
     {
         "t": "Spider-Man: Across the Spider-Verse",
         "s": "Sony",
-        "y": 2023
+        "y": 2023,
+        "rating": "Banned",
+        "score": 8.5,
+        "duration": "2h 20m"
     },
     {
         "t": "Hotel Transylvania",
         "s": "Sony",
-        "y": 2012
+        "y": 2012,
+        "rating": "6+",
+        "score": 7.0,
+        "duration": "1h 31m"
     },
     {
         "t": "Hotel Transylvania 2",
         "s": "Sony",
-        "y": 2015
+        "y": 2015,
+        "rating": "7+",
+        "score": 6.6,
+        "duration": "1h 29m"
     },
     {
         "t": "The Smurfs",
         "s": "Sony",
-        "y": 2011
+        "y": 2011,
+        "rating": "6+",
+        "score": 5.4,
+        "duration": "1h 43m"
     },
     {
         "t": "Cloudy with a Chance of Meatballs",
         "s": "Sony",
-        "y": 2009
+        "y": 2009,
+        "rating": "6+",
+        "score": 6.9,
+        "duration": "1h 30m"
     },
     {
         "t": "Open Season",
         "s": "Sony",
-        "y": 2006
+        "y": 2006,
+        "rating": "6+",
+        "score": 6.1,
+        "duration": "1h 26m"
     },
     {
         "t": "Surf's Up",
         "s": "Sony",
-        "y": 2007
+        "y": 2007,
+        "rating": "5+",
+        "score": 6.7,
+        "duration": "1h 25m"
     },
     {
         "t": "Peter Rabbit",
         "s": "Sony",
-        "y": 2018
+        "y": 2018,
+        "rating": "7+",
+        "score": 6.6,
+        "duration": "1h 35m"
     },
     {
         "t": "The Angry Birds Movie",
         "s": "Sony",
-        "y": 2016
+        "y": 2016,
+        "rating": "7+",
+        "score": 6.3,
+        "duration": "1h 37m"
     },
     {
         "t": "The Emoji Movie",
         "s": "Sony",
-        "y": 2017
+        "y": 2017,
+        "rating": "6+",
+        "score": 3.5,
+        "duration": "1h 26m"
     },
     {
         "t": "Stuart Little",
         "s": "Sony",
-        "y": 1999
+        "y": 1999,
+        "rating": "7+",
+        "score": 6.0,
+        "duration": "1h 24m"
     },
     {
         "t": "Arthur Christmas",
         "s": "Sony",
-        "y": 2011
+        "y": 2011,
+        "rating": "6+",
+        "score": 7.1,
+        "duration": "1h 37m"
     },
     {
         "t": "The Pirates! Band of Misfits",
         "s": "Sony",
-        "y": 2012
+        "y": 2012,
+        "rating": "6+",
+        "score": 6.7,
+        "duration": "1h 28m"
     },
     {
         "t": "The Mitchells vs. the Machines",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "8+",
+        "score": 7.6,
+        "duration": "1h 54m"
     },
     {
         "t": "Vivo",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "6+",
+        "score": 6.7,
+        "duration": "1h 35m"
     },
     {
         "t": "Arlo the Alligator Boy",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "8+",
+        "score": 6.4,
+        "duration": "1h 30m"
     },
     {
         "t": "Leo",
         "s": "Netflix",
-        "y": 2023
+        "y": 2023,
+        "rating": "8+",
+        "score": 7.0,
+        "duration": "1h 42m"
     },
     {
         "t": "Nimona",
         "s": "Netflix",
-        "y": 2023
+        "y": 2023,
+        "rating": "11+",
+        "score": 7.5,
+        "duration": "1h 41m"
     },
     {
         "t": "Guillermo del Toro's Pinocchio",
         "s": "Netflix",
-        "y": 2022
+        "y": 2022,
+        "rating": "11+",
+        "score": 7.6,
+        "duration": "1h 57m"
     },
     {
         "t": "Wendell & Wild",
         "s": "Netflix",
-        "y": 2022
+        "y": 2022,
+        "rating": "11+",
+        "score": 6.4,
+        "duration": "1h 45m"
     },
     {
         "t": "Apollo 10 1/2",
         "s": "Netflix",
-        "y": 2022
+        "y": 2022,
+        "rating": "10+",
+        "score": 7.2,
+        "duration": "1h 37m"
     },
     {
         "t": "My Little Pony: A New Generation",
         "s": "Netflix",
-        "y": 2021
+        "y": 2021,
+        "rating": "5+",
+        "score": 6.8,
+        "duration": "1h 30m"
     },
     {
         "t": "Despicable Me",
         "s": "Illumination",
-        "y": 2010
+        "y": 2010,
+        "rating": "6+",
+        "score": 7.6,
+        "duration": "1h 35m"
     },
     {
         "t": "Minions",
         "s": "Illumination",
-        "y": 2015
+        "y": 2015,
+        "rating": "5+",
+        "score": 6.4,
+        "duration": "1h 31m"
     },
     {
         "t": "The Secret Life of Pets",
         "s": "Illumination",
-        "y": 2016
+        "y": 2016,
+        "rating": "7+",
+        "score": 6.5,
+        "duration": "1h 26m"
     },
     {
         "t": "Sing",
         "s": "Illumination",
-        "y": 2016
+        "y": 2016,
+        "rating": "7+",
+        "score": 7.1,
+        "duration": "1h 48m"
     },
     {
         "t": "The Super Mario Bros. Movie",
         "s": "Illumination",
-        "y": 2023
+        "y": 2023,
+        "rating": "7+",
+        "score": 7.0,
+        "duration": "1h 32m"
     },
     {
         "t": "The Lorax",
         "s": "Illumination",
-        "y": 2012
+        "y": 2012,
+        "rating": "5+",
+        "score": 6.4,
+        "duration": "1h 26m"
     },
     {
         "t": "The Grinch",
         "s": "Illumination",
-        "y": 2018
+        "y": 2018,
+        "rating": "6+",
+        "score": 6.4,
+        "duration": "1h 25m"
     },
     {
         "t": "Hop",
         "s": "Illumination",
-        "y": 2011
+        "y": 2011,
+        "rating": "5+",
+        "score": 5.4,
+        "duration": "1h 35m"
     },
     {
         "t": "Ice Age",
         "s": "Blue Sky",
-        "y": 2002
+        "y": 2002,
+        "rating": "6+",
+        "score": 7.5,
+        "duration": "1h 21m"
     },
     {
         "t": "Ice Age: The Meltdown",
         "s": "Blue Sky",
-        "y": 2006
+        "y": 2006,
+        "rating": "6+",
+        "score": 6.8,
+        "duration": "1h 31m"
     },
     {
         "t": "Ice Age: Dawn of the Dinosaurs",
         "s": "Blue Sky",
-        "y": 2009
+        "y": 2009,
+        "rating": "6+",
+        "score": 6.9,
+        "duration": "1h 34m"
     },
     {
         "t": "Rio",
         "s": "Blue Sky",
-        "y": 2011
+        "y": 2011,
+        "rating": "6+",
+        "score": 6.9,
+        "duration": "1h 36m"
     },
     {
         "t": "Rio 2",
         "s": "Blue Sky",
-        "y": 2014
+        "y": 2014,
+        "rating": "6+",
+        "score": 6.3,
+        "duration": "1h 41m"
     },
     {
         "t": "Robots",
         "s": "Blue Sky",
-        "y": 2005
+        "y": 2005,
+        "rating": "5+",
+        "score": 6.4,
+        "duration": "1h 31m"
     },
     {
         "t": "Horton Hears a Who!",
         "s": "Blue Sky",
-        "y": 2008
+        "y": 2008,
+        "rating": "4+",
+        "score": 6.8,
+        "duration": "1h 26m"
     },
     {
         "t": "Epic",
         "s": "Blue Sky",
-        "y": 2013
+        "y": 2013,
+        "rating": "6+",
+        "score": 6.6,
+        "duration": "1h 42m"
     },
     {
         "t": "Ferdinand",
         "s": "Blue Sky",
-        "y": 2017
+        "y": 2017,
+        "rating": "6+",
+        "score": 6.7,
+        "duration": "1h 48m"
     },
     {
         "t": "Spies in Disguise",
         "s": "Blue Sky",
-        "y": 2019
+        "y": 2019,
+        "rating": "8+",
+        "score": 6.8,
+        "duration": "1h 42m"
     },
     {
         "t": "Anastasia",
         "s": "Fox",
-        "y": 1997
+        "y": 1997,
+        "rating": "6+",
+        "score": 7.2,
+        "duration": "1h 34m"
     },
     {
         "t": "Titan A.E.",
         "s": "Fox",
-        "y": 2000
+        "y": 2000,
+        "rating": "11+",
+        "score": 6.6,
+        "duration": "1h 34m"
     },
     {
         "t": "The Book of Life",
         "s": "Fox",
-        "y": 2014
+        "y": 2014,
+        "rating": "7+",
+        "score": 7.2,
+        "duration": "1h 35m"
     },
     {
         "t": "Despicable Me 2",
         "s": "Illumination",
-        "y": 2013
+        "y": 2013,
+        "rating": "6+",
+        "score": 7.3,
+        "duration": "1h 38m"
     },
     {
         "t": "Despicable Me 3",
         "s": "Illumination",
-        "y": 2017
+        "y": 2017,
+        "rating": "7+",
+        "score": 6.3,
+        "duration": "1h 29m"
     },
     {
         "t": "Minions: The Rise of Gru",
         "s": "Illumination",
-        "y": 2022
+        "y": 2022,
+        "rating": "6+",
+        "score": 6.5,
+        "duration": "1h 27m"
     },
     {
         "t": "Sing 2",
         "s": "Illumination",
-        "y": 2021
+        "y": 2021,
+        "rating": "7+",
+        "score": 7.3,
+        "duration": "1h 50m"
     },
     {
         "t": "The Secret Life of Pets 2",
         "s": "Illumination",
-        "y": 2019
+        "y": 2019,
+        "rating": "7+",
+        "score": 6.4,
+        "duration": "1h 26m"
     },
     {
         "t": "Migration",
         "s": "Illumination",
-        "y": 2023
+        "y": 2023,
+        "rating": "6+",
+        "score": 6.6,
+        "duration": "1h 23m"
     },
     {
         "t": "The Peanuts Movie",
         "s": "Blue Sky",
-        "y": 2015
+        "y": 2015,
+        "rating": "4+",
+        "score": 7.0,
+        "duration": "1h 28m"
     },
     {
         "t": "Ice Age: Continental Drift",
         "s": "Blue Sky",
-        "y": 2012
+        "y": 2012,
+        "rating": "6+",
+        "score": 6.5,
+        "duration": "1h 28m"
     },
     {
         "t": "Ice Age: Collision Course",
         "s": "Blue Sky",
-        "y": 2016
+        "y": 2016,
+        "rating": "6+",
+        "score": 5.7,
+        "duration": "1h 34m"
     },
     {
         "t": "Spirited Away",
         "s": "Ghibli",
-        "y": 2001
+        "y": 2001,
+        "rating": "9+",
+        "score": 8.6,
+        "duration": "2h 4m"
     },
     {
         "t": "My Neighbor Totoro",
         "s": "Ghibli",
-        "y": 1988
+        "y": 1988,
+        "rating": "5+",
+        "score": 8.1,
+        "duration": "1h 26m"
     },
     {
         "t": "Ponyo",
         "s": "Ghibli",
-        "y": 2008
+        "y": 2008,
+        "rating": "5+",
+        "score": 7.6,
+        "duration": "1h 41m"
     },
     {
         "t": "Howl's Moving Castle",
         "s": "Ghibli",
-        "y": 2004
+        "y": 2004,
+        "rating": "8+",
+        "score": 8.2,
+        "duration": "1h 59m"
     },
     {
         "t": "Princess Mononoke",
         "s": "Ghibli",
-        "y": 1997
+        "y": 1997,
+        "rating": "12+",
+        "score": 8.3,
+        "duration": "2h 13m"
     },
     {
         "t": "Coraline",
         "s": "Laika",
-        "y": 2009
+        "y": 2009,
+        "rating": "9+",
+        "score": 7.8,
+        "duration": "1h 40m"
     },
     {
         "t": "Kubo and the Two Strings",
         "s": "Laika",
-        "y": 2016
+        "y": 2016,
+        "rating": "9+",
+        "score": 7.7,
+        "duration": "1h 41m"
     },
     {
         "t": "The Iron Giant",
         "s": "WB",
-        "y": 1999
+        "y": 1999,
+        "rating": "6+",
+        "score": 8.1,
+        "duration": "1h 26m"
     },
     {
         "t": "The Lego Movie",
         "s": "WB",
-        "y": 2014
+        "y": 2014,
+        "rating": "6+",
+        "score": 7.7,
+        "duration": "1h 40m"
     },
     {
         "t": "The Lego Batman Movie",
         "s": "WB",
-        "y": 2017
+        "y": 2017,
+        "rating": "7+",
+        "score": 7.3,
+        "duration": "1h 44m"
     },
     {
         "t": "The Return of Jafar",
         "s": "Disney",
-        "y": 1994
+        "y": 1994,
+        "rating": "5+",
+        "score": 5.8,
+        "duration": "1h 9m"
     },
     {
         "t": "Beauty and the Beast: The Enchanted Christmas",
         "s": "Disney",
-        "y": 1997
+        "y": 1997,
+        "rating": "8+",
+        "score": 5.9,
+        "duration": "1h 12m"
     },
     {
         "t": "Belle's Magical World",
         "s": "Disney",
-        "y": 1998
+        "y": 1998,
+        "rating": "5+",
+        "score": 4.8,
+        "duration": "1h 32m"
     },
     {
         "t": "The Lion King II: Simba's Pride",
         "s": "Disney",
-        "y": 1998
+        "y": 1998,
+        "rating": "5+",
+        "score": 6.4,
+        "duration": "1h 22m"
     },
     {
         "t": "Pocahontas II: Journey to a New World",
         "s": "Disney",
-        "y": 1998
+        "y": 1998,
+        "rating": "6+",
+        "score": 4.8,
+        "duration": "1h 13m"
     },
     {
         "t": "Bartok the Magnificent",
         "s": "Fox",
-        "y": 1999
+        "y": 1999,
+        "rating": "7+",
+        "score": 6.1,
+        "duration": "1h 8m"
     },
     {
         "t": "How the Grinch Stole Christmas",
         "s": "Universal",
-        "y": 2000
+        "y": 2000,
+        "rating": "8+",
+        "score": 6.4,
+        "duration": "1h 44m"
     },
     {
         "t": "Cinderella II",
         "s": "Disney",
-        "y": 2002
+        "y": 2002,
+        "rating": "4+",
+        "score": 5.0,
+        "duration": "1h 13m"
     },
     {
         "t": "Return to Never Land",
         "s": "Disney",
-        "y": 2002
+        "y": 2002,
+        "rating": "G",
+        "score": 5.7,
+        "duration": 72
     },
     {
         "t": "Tarzan & Jane",
         "s": "Disney",
-        "y": 2002
+        "y": 2002,
+        "rating": "G",
+        "score": 5.5,
+        "duration": 72
     },
     {
         "t": "Stuart Little 2",
         "s": "Sony",
-        "y": 2002
+        "y": 2002,
+        "rating": "PG",
+        "score": 5.9,
+        "duration": 78
     },
     {
         "t": "The Jungle Book 2",
         "s": "Disney",
-        "y": 2003
+        "y": 2003,
+        "rating": "G",
+        "score": 5.7,
+        "duration": 72
     },
     {
         "t": "Atlantis: Milo's Return",
         "s": "Disney",
-        "y": 2003
+        "y": 2003,
+        "rating": "PG",
+        "score": 5.4,
+        "duration": 72
     },
     {
         "t": "Stitch! The Movie",
         "s": "Disney",
-        "y": 2003
+        "y": 2003,
+        "rating": "PG",
+        "score": 5.7,
+        "duration": 60
     },
     {
         "t": "The Lion King 1 1/2: Hakuna Matata",
         "s": "Disney",
-        "y": 2004
+        "y": 2004,
+        "rating": "G",
+        "score": 6.7,
+        "duration": 77
     },
     {
         "t": "Mulan II",
         "s": "Disney",
-        "y": 2004
+        "y": 2004,
+        "rating": "G",
+        "score": 5.2,
+        "duration": 79
     },
     {
         "t": "Stuart Little 3: Call of the Wild",
         "s": "Sony",
-        "y": 2005
+        "y": 2005,
+        "rating": "G",
+        "score": 4.8,
+        "duration": 75
     },
     {
         "t": "Tarzan II",
         "s": "Disney",
-        "y": 2005
+        "y": 2005,
+        "rating": "G",
+        "score": 5.5,
+        "duration": 72
     },
     {
         "t": "Kronk's New Groove",
         "s": "Disney",
-        "y": 2005
+        "y": 2005,
+        "rating": "G",
+        "score": 6.0,
+        "duration": 75
     },
     {
         "t": "Lilo & Stitch 2: Stitch Has a Glitch",
         "s": "Disney",
-        "y": 2005
+        "y": 2005,
+        "rating": "G",
+        "score": 5.8,
+        "duration": 68
     },
     {
         "t": "Bambi II",
         "s": "Disney",
-        "y": 2006
+        "y": 2006,
+        "rating": "G",
+        "score": 6.7,
+        "duration": 72
     },
     {
         "t": "Brother Bear 2",
         "s": "Disney",
-        "y": 2006
+        "y": 2006,
+        "rating": "G",
+        "score": 5.7,
+        "duration": 73
     },
     {
         "t": "Cinderella III",
         "s": "Disney",
-        "y": 2007
+        "y": 2007,
+        "rating": "G",
+        "score": 6.7,
+        "duration": 72
     },
     {
         "t": "Shrek the Third",
         "s": "DreamWorks",
-        "y": 2007
+        "y": 2007,
+        "rating": "PG",
+        "score": 6.1,
+        "duration": 92
     },
     {
         "t": "Open Season 2",
         "s": "Sony",
-        "y": 2008
+        "y": 2008,
+        "rating": "G",
+        "score": 5.1,
+        "duration": 76
     },
     {
         "t": "Madagascar: Escape 2 Africa",
         "s": "DreamWorks",
-        "y": 2008
+        "y": 2008,
+        "rating": "PG",
+        "score": 6.6,
+        "duration": 89
     },
     {
         "t": "Open Season 3",
         "s": "Sony",
-        "y": 2010
+        "y": 2010,
+        "rating": "G",
+        "score": 4.9,
+        "duration": 75
     },
     {
         "t": "Shrek Forever After",
         "s": "DreamWorks",
-        "y": 2010
+        "y": 2010,
+        "rating": "PG",
+        "score": 6.3,
+        "duration": 93
     },
     {
         "t": "Cars 2",
         "s": "Pixar",
-        "y": 2011
+        "y": 2011,
+        "rating": "G",
+        "score": 6.2,
+        "duration": 106
     },
     {
         "t": "Kung Fu Panda 2",
         "s": "DreamWorks",
-        "y": 2011
+        "y": 2011,
+        "rating": "PG",
+        "score": 7.2,
+        "duration": 91
     },
     {
         "t": "Madagascar 3: Europe's Most Wanted",
         "s": "DreamWorks",
-        "y": 2012
+        "y": 2012,
+        "rating": "PG",
+        "score": 6.8,
+        "duration": 93
     },
     {
         "t": "Cloudy with a Chance of Meatballs 2",
         "s": "Sony",
-        "y": 2013
+        "y": 2013,
+        "rating": "PG",
+        "score": 6.5,
+        "duration": 94
     },
     {
         "t": "The Smurfs 2",
         "s": "Sony",
-        "y": 2013
+        "y": 2013,
+        "rating": "PG",
+        "score": 5.4,
+        "duration": 105
     },
     {
         "t": "How to Train Your Dragon 2",
         "s": "DreamWorks",
-        "y": 2014
+        "y": 2014,
+        "rating": "PG",
+        "score": 7.8,
+        "duration": 102
     },
     {
         "t": "Open Season: Scared Silly",
         "s": "Sony",
-        "y": 2015
+        "y": 2015,
+        "rating": "G",
+        "score": 4.3,
+        "duration": 85
     },
     {
         "t": "Kung Fu Panda 3",
         "s": "DreamWorks",
-        "y": 2016
+        "y": 2016,
+        "rating": "PG",
+        "score": 7.1,
+        "duration": 95
     },
     {
         "t": "Smurfs: The Lost Village",
         "s": "Sony",
-        "y": 2017
+        "y": 2017,
+        "rating": "PG",
+        "score": 6.0,
+        "duration": 90
     },
     {
         "t": "Surf's Up 2: WaveMania",
         "s": "Sony",
-        "y": 2017
+        "y": 2017,
+        "rating": "PG",
+        "score": 4.8,
+        "duration": 85
     },
     {
         "t": "The Lego Movie 2: The Second Part",
         "s": "WB",
-        "y": 2019
+        "y": 2019,
+        "rating": "PG",
+        "score": 6.6,
+        "duration": 107
     },
     {
         "t": "Toy Story 4",
         "s": "Pixar",
-        "y": 2019
+        "y": 2019,
+        "rating": "G",
+        "score": 7.7,
+        "duration": 100
     },
     {
         "t": "Ralph Breaks the Internet",
         "s": "Disney",
-        "y": 2018
+        "y": 2018,
+        "rating": "PG",
+        "score": 7.2,
+        "duration": 112
     },
     {
         "t": "Hotel Transylvania 3: Summer Vacation",
         "s": "Sony",
-        "y": 2018
+        "y": 2018,
+        "rating": "PG",
+        "score": 6.3,
+        "duration": 97
     },
     {
         "t": "Frozen 2",
         "s": "Disney",
-        "y": 2019
+        "y": 2019,
+        "rating": "PG",
+        "score": 7.4,
+        "duration": 103
     },
     {
         "t": "The Angry Birds Movie 2",
         "s": "Sony",
-        "y": 2019
+        "y": 2019,
+        "rating": "PG",
+        "score": 6.5,
+        "duration": 99
     },
     {
         "t": "How to Train Your Dragon: The Hidden World",
         "s": "DreamWorks",
-        "y": 2019
+        "y": 2019,
+        "rating": "PG",
+        "score": 7.6,
+        "duration": 104
     },
     {
         "t": "Trolls World Tour",
         "s": "DreamWorks",
-        "y": 2020
+        "y": 2020,
+        "rating": "PG",
+        "score": 5.9,
+        "duration": 90
     },
     {
         "t": "The Croods: A New Age",
         "s": "DreamWorks",
-        "y": 2020
+        "y": 2020,
+        "rating": "PG",
+        "score": 7.4,
+        "duration": 95
     },
     {
         "t": "Spirit Untamed",
         "s": "DreamWorks",
-        "y": 2021
+        "y": 2021,
+        "rating": "PG",
+        "score": 5.7,
+        "duration": 84
     },
     {
         "t": "The Boss Baby: Family Business",
         "s": "DreamWorks",
-        "y": 2021
+        "y": 2021,
+        "rating": "PG",
+        "score": 5.9,
+        "duration": 98
     },
     {
         "t": "Peter Rabbit 2: The Runaway",
         "s": "Sony",
-        "y": 2021
+        "y": 2021,
+        "rating": "PG",
+        "score": 6.7,
+        "duration": 99
     },
     {
         "t": "Hotel Transylvania: Transformania",
         "s": "Sony",
-        "y": 2022
+        "y": 2022,
+        "rating": "PG",
+        "score": 5.9,
+        "duration": 87
     },
     {
         "t": "Trolls Band Together",
         "s": "DreamWorks",
-        "y": 2023
+        "y": 2023,
+        "rating": "PG",
+        "score": 6.1,
+        "duration": 91
     },
     {
         "t": "Kung Fu Panda 4",
         "s": "DreamWorks",
-        "y": 2024
+        "y": 2024,
+        "rating": "PG",
+        "score": 6.8,
+        "duration": 94
     },
     {
         "t": "Megamind vs. the Doom Syndicate",
         "s": "DreamWorks",
-        "y": 2024
+        "y": 2024,
+        "rating": "PG",
+        "score": 3.4,
+        "duration": 92
     },
     {
         "t": "Despicable Me 4",
         "s": "Illumination",
-        "y": 2024
+        "y": 2024,
+        "rating": "PG",
+        "score": 6.2,
+        "duration": 95
     },
     {
         "t": "Moana 2",
         "s": "Disney",
-        "y": 2024
+        "y": 2024,
+        "rating": "PG",
+        "score": 7.5,
+        "duration": 100
     },
     {
         "t": "Zootopia 2",
         "s": "Disney",
-        "y": 2025
+        "y": 2025,
+        "rating": "PG",
+        "score": 7.5,
+        "duration": 108
     },
     {
         "t": "The Bad Guys 2",
         "s": "DreamWorks",
-        "y": 2025
+        "y": 2025,
+        "rating": "PG",
+        "score": 6.5,
+        "duration": 105
+    },
+    {
+        "t": "The AristoCats",
+        "s": "Disney",
+        "y": 1970,
+        "rating": "+4",
+        "score": 7.1,
+        "duration": "1h 18m"
     }
 ]

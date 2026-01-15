@@ -75,8 +75,9 @@ class MovieApp {
         
         const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
 
-        return rawData.map((movieData, index) => {
-            const { t, s, y, rating, score, duration } = movieData;
+        return rawData.map((movieData) => {
+            // استخراج البيانات بما فيها الـ id الجديد
+            const { id, t, s, y, rating, score, duration } = movieData;
 
             // --- تحديث منطق الألوان الذكي ---
             let badgeColor = "#f97316"; // الافتراضي (برتقالي)
@@ -94,23 +95,18 @@ class MovieApp {
             // أي شيء آخر (من 11 إلى 17) سيأخذ اللون البرتقالي الافتراضي
             // -------------------------------
 
-            let durationDisplay = duration;
-            if (typeof duration === 'number') {
-                const hours = Math.floor(duration / 60);
-                const minutes = duration % 60;
-                durationDisplay = `${hours}h ${minutes}m`;
-            }
+            // (تم حذف كود تحويل الوقت لأنه أصبح موحداً في JSON)
 
             return {
-                id: index + 1,
+                id: id, // استخدام الـ ID الثابت من الملف
                 title: t,
                 studio: s,
                 year: y,
-                image: `${baseUrl}${index + 1}.jpg`,
+                image: `${baseUrl}${id}.jpg`, // الربط الآن يعتمد على الـ ID وليس الترتيب
                 rating: rating,
                 badgeColor: badgeColor,
                 score: score,
-                duration: durationDisplay
+                duration: duration // الوقت جاهز
             };
         });
     }

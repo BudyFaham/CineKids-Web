@@ -3,6 +3,8 @@ class MovieApp {
         const savedState = JSON.parse(localStorage.getItem('cinekids_prefs')) || {};
         const savedTheme = localStorage.getItem('cinekids_theme') || 'dark';
         const savedFavorites = JSON.parse(localStorage.getItem('cinekids_favorites')) || [];
+        // قراءة حالة ظهور قسم الترحيب (هل تم رؤيته من قبل؟)
+        const hasSeenHero = localStorage.getItem('cinekids_hero_seen') === 'true';
 
         this.state = {
             movies: [],
@@ -10,7 +12,8 @@ class MovieApp {
             filter: savedState.filter || 'all',
             sort: savedState.sort || 'newest',
             search: '',
-            theme: savedTheme
+            theme: savedTheme,
+            heroSeen: hasSeenHero // حالة جديدة
         };
 
         this.dom = {
@@ -19,8 +22,14 @@ class MovieApp {
             searchInput: document.getElementById('searchInput'),
             sortSelect: document.getElementById('sortSelect'),
             filterBtns: document.querySelectorAll('.filter-btn'),
+            logoBtn: document.getElementById('logoBtn'), 
             resetBtn: document.getElementById('resetBtn'),
             themeToggle: document.getElementById('themeToggle'),
+            
+            // عنصر قسم الترحيب
+            heroSection: document.querySelector('.hero-section'),
+            exploreBtn: document.getElementById('exploreBtn'),
+            backToTopBtn: document.getElementById('backToTop'),
             
             // عناصر لوحة التحكم السرية
             adminModal: document.getElementById('adminModal'),
@@ -52,10 +61,37 @@ class MovieApp {
 
     async init() {
         this.applyTheme();
+        this.checkHeroVisibility(); // التحقق من ظهور الترحيب عند البدء
         this.state.movies = await this.generateDB();
         this.applySavedPreferences();
         this.bindEvents();
         this.render();
+    }
+
+    // دالة جديدة للتحكم في ظهور قسم الترحيب
+    checkHeroVisibility() {
+        if (this.state.heroSeen && this.dom.heroSection) {
+            this.dom.heroSection.style.display = 'none';
+        }
+    }
+
+    // دالة لإخفاء الترحيب وحفظ الحالة
+    dismissHero() {
+        if (this.dom.heroSection) {
+            // تأثير حركي بسيط للاختفاء
+            this.dom.heroSection.style.transition = 'opacity 0.5s ease, margin-top 0.5s ease';
+            this.dom.heroSection.style.opacity = '0';
+            this.dom.heroSection.style.marginTop = '-200px'; // سحب المحتوى للأعلى
+            
+            setTimeout(() => {
+                this.dom.heroSection.style.display = 'none';
+                this.dom.grid.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+
+            // حفظ الحالة في المتصفح
+            this.state.heroSeen = true;
+            localStorage.setItem('cinekids_hero_seen', 'true');
+        }
     }
 
     applyTheme() {
@@ -76,37 +112,30 @@ class MovieApp {
         const baseUrl = "https://res.cloudinary.com/dk44bz8gn/image/fetch/f_auto,q_auto/https://raw.githubusercontent.com/BudyFaham/Cinekides/main/images/";
 
         return rawData.map((movieData) => {
-            // استخراج البيانات بما فيها الـ id الجديد
             const { id, t, s, y, rating, score, duration } = movieData;
 
-            // --- تحديث منطق الألوان الذكي ---
-            let badgeColor = "#f97316"; // الافتراضي (برتقالي)
+            let badgeColor = "#f97316"; 
 
-            // استخراج الرقم من النص (مثلاً "+4" تصبح 4)
             const ageNum = parseInt(rating.replace(/\D/g, '')) || 0;
 
             if (rating === "Banned" || rating === "+18") {
-                badgeColor = "#ef4444"; // أحمر (للكبار أو محظور)
+                badgeColor = "#ef4444"; 
             } else if (["ALL", "G"].includes(rating) || (ageNum > 0 && ageNum <= 5)) {
-                badgeColor = "#22c55e"; // أخضر (للأطفال الصغار)
+                badgeColor = "#22c55e"; 
             } else if (["PG"].includes(rating) || (ageNum >= 6 && ageNum <= 10)) {
-                badgeColor = "#eab308"; // أصفر (إرشاد عائلي / أطفال أكبر)
+                badgeColor = "#eab308"; 
             } 
-            // أي شيء آخر (من 11 إلى 17) سيأخذ اللون البرتقالي الافتراضي
-            // -------------------------------
-
-            // (تم حذف كود تحويل الوقت لأنه أصبح موحداً في JSON)
 
             return {
-                id: id, // استخدام الـ ID الثابت من الملف
+                id: id,
                 title: t,
                 studio: s,
                 year: y,
-                image: `${baseUrl}${id}.jpg`, // الربط الآن يعتمد على الـ ID وليس الترتيب
+                image: `${baseUrl}${id}.jpg`,
                 rating: rating,
                 badgeColor: badgeColor,
                 score: score,
-                duration: duration // الوقت جاهز
+                duration: duration
             };
         });
     }
@@ -137,11 +166,8 @@ class MovieApp {
                 btn.classList.add('active');
                 this.state.filter = btn.dataset.filter;
                 
-                // --- التعديل الجديد هنا ---
-                // تصفير البحث عند تغيير الفلتر
                 this.state.search = '';
                 this.dom.searchInput.value = '';
-                // --------------------------
 
                 this.saveState();
                 this.render();
@@ -154,8 +180,39 @@ class MovieApp {
             this.render();
         });
 
-        this.dom.resetBtn.addEventListener('click', () => this.reset());
+        if (this.dom.logoBtn) {
+            this.dom.logoBtn.addEventListener('click', () => this.reset());
+        }
+
+        if (this.dom.resetBtn) {
+            this.dom.resetBtn.addEventListener('click', () => {
+                // ...
+            });
+        }
+        
         this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
+
+        // --- تعديل وظيفة زر Explore ---
+        if (this.dom.exploreBtn) {
+            this.dom.exploreBtn.addEventListener('click', () => {
+                this.dismissHero(); // استدعاء دالة الإخفاء بدلاً من التمرير فقط
+            });
+        }
+        // -----------------------------
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                this.dom.backToTopBtn.classList.add('show');
+            } else {
+                this.dom.backToTopBtn.classList.remove('show');
+            }
+        });
+
+        if (this.dom.backToTopBtn) {
+            this.dom.backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
         if (this.dom.closeAdmin) {
             this.dom.closeAdmin.addEventListener('click', () => {
@@ -246,6 +303,7 @@ class MovieApp {
         this.applySavedPreferences();
         this.saveState();
         this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     toggleFavorite(movie) {

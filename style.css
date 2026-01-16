@@ -26,6 +26,31 @@
     --glass-bg: rgba(255, 255, 255, 0.90);
 }
 
+/* --- Custom Scrollbar --- */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--bg-color);
+    scroll-behavior: smooth; /* لتمرير ناعم للصفحة */
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 6px;
+    border: 3px solid var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2563eb;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -38,6 +63,9 @@ body {
     padding: 0;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 :focus-visible {
@@ -109,7 +137,6 @@ header {
     color: #0f172a;
 }
 
-/* Theme Toggle Button */
 .theme-toggle {
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.1);
@@ -212,17 +239,15 @@ header {
     font-size: 0.9rem;
     transition: all 0.3s ease;
     font-family: inherit;
-    /* إزالة الـ outline الافتراضي لاستبداله بـ focus-visible مخصص */
     outline: none;
 }
 
-/* 1. إمكانية الوصول: تنسيق التركيز (Focus Visible) مشابه للـ Hover */
 .filter-btn:focus-visible {
     background: rgba(255,255,255,0.1);
     color: var(--text-primary);
     transform: translateY(-2px);
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* حلقة تركيز واضحة */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
 .filter-btn:hover {
@@ -231,7 +256,6 @@ header {
     transform: translateY(-2px);
 }
 
-/* التنسيق الأساسي للأزرار النشطة (الافتراضي للكل) */
 .filter-btn.active {
     background: var(--accent-color);
     color: white;
@@ -239,9 +263,7 @@ header {
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
 }
 
-/* --- 2. تخصيص ألوان أزرار الفلترة حسب الاستوديو --- */
-
-/* تعريف متغيرات الألوان المحلية لكل زر */
+/* --- ألوان أزرار الفلترة --- */
 .filter-btn[data-filter="Disney"] { --brand-color: var(--disney); }
 .filter-btn[data-filter="Pixar"] { --brand-color: var(--pixar); --brand-text: #000; }
 .filter-btn[data-filter="DreamWorks"] { --brand-color: var(--dreamworks); }
@@ -255,18 +277,15 @@ header {
 .filter-btn[data-filter="Laika"] { --brand-color: var(--laika); }
 .filter-btn[data-filter="Universal"] { --brand-color: var(--universal); }
 
-/* تطبيق الألوان عند التفاعل (Hover, Focus-Visible, Active) */
-/* نستثني زر "الكل" و "المفضلة" لأن لهما تنسيق خاص أدناه */
 .filter-btn:not([data-filter="all"]):not([data-filter="favorites"]):hover,
 .filter-btn:not([data-filter="all"]):not([data-filter="favorites"]):focus-visible,
 .filter-btn:not([data-filter="all"]):not([data-filter="favorites"]).active {
     background: var(--brand-color);
     border-color: var(--brand-color);
-    color: var(--brand-text, white); /* الأبيض افتراضي إلا إذا تم تحديده كأسود */
-    box-shadow: 0 0 15px var(--brand-color); /* توهج بنفس لون الاستوديو */
+    color: var(--brand-text, white);
+    box-shadow: 0 0 15px var(--brand-color);
 }
 
-/* تخصيص زر المفضلة */
 .filter-btn[data-filter="favorites"] {
     border-color: rgba(239, 68, 68, 0.3);
     color: #fca5a5;
@@ -281,14 +300,113 @@ header {
     box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
 }
 
+/* --- Hero Section (New) --- */
+.hero-section {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    margin-bottom: 20px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin: 0 0 15px 0;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+[data-theme="light"] .hero-content h1 {
+    text-shadow: none;
+}
+
+.hero-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.6);
+}
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section {
+        padding: 50px 20px 20px;
+    }
+}
+
+/* --- Back to Top Button (New) --- */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent-color);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #2563eb;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
 /* --- الكروت والشبكة --- */
 .movies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 25px;
     max-width: 1400px;
-    margin: 40px auto;
+    margin: 20px auto 40px; /* تعديل الهامش ليتناسب مع قسم Hero */
     padding: 0 20px;
+    flex: 1;
 }
 
 .movie-card {
@@ -335,7 +453,6 @@ header {
     transform: scale(1.1);
 }
 
-/* Loading Skeleton */
 .skeleton {
     background: linear-gradient(90deg,
         var(--card-bg) 0%,
@@ -350,7 +467,6 @@ header {
     100% { background-position: -200% 0; }
 }
 
-/* تعديل البادجات لتكون على اليسار فقط لإفساح المجال لزر القلب */
 .badges-container {
     position: absolute;
     top: 10px;
@@ -391,7 +507,6 @@ header {
     background: rgba(255, 255, 255, 0.95);
 }
 
-/* زر القلب الجديد */
 .fav-btn {
     position: absolute;
     top: 10px;
@@ -619,6 +734,42 @@ header {
 .generate-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* --- Footer Styles --- */
+.site-footer {
+    background: rgba(15, 23, 42, 0.8);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 40px 0;
+    margin-top: auto;
+    text-align: center;
+    color: var(--text-secondary);
+    backdrop-filter: blur(10px);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.copyright {
+    opacity: 0.7;
+    font-size: 0.85rem !important;
+}
+
+[data-theme="light"] .site-footer {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0,0,0,0.05);
+    color: #64748b;
 }
 
 /* Responsive */

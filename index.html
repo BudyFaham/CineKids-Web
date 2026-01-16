@@ -12,7 +12,7 @@
     <header>
         <div class="header-content">
             <div class="top-bar">
-                <button class="logo" id="resetBtn" aria-label="Reset Filters">CineKids 🎬</button>
+                <button class="logo" id="logoBtn" aria-label="Go to Home">CineKids 🎬</button>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <div class="stats-badge" id="countBadge">Loading...</div>
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">🌙</button>
@@ -29,7 +29,7 @@
                     </select>
                 </div>
                 <div class="filters" role="group" aria-label="Studio Filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn active" data-filter="all" id="resetBtn">All</button>
                     <button class="filter-btn" data-filter="favorites">❤️ Favorites</button>
                     <button class="filter-btn" data-filter="Disney">Disney</button>
                     <button class="filter-btn" data-filter="Pixar">Pixar</button>
@@ -38,10 +38,25 @@
                     <button class="filter-btn" data-filter="Illumination">Illumination</button>
                     <button class="filter-btn" data-filter="Sony">Sony</button>
                     <button class="filter-btn" data-filter="Ghibli">Ghibli</button>
+                    <button class="filter-btn" data-filter="Blue Sky">Blue Sky</button>
+                    <button class="filter-btn" data-filter="Laika">Laika</button>
+                    <button class="filter-btn" data-filter="Fox">Fox</button>
+                    <button class="filter-btn" data-filter="WB">WB</button>
+                    <button class="filter-btn" data-filter="Universal">Universal</button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Hero Section (New) -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to the Magic World ✨</h1>
+            <p>The ultimate collection of animated adventures for your little ones. Discover, rate, and save your favorites!</p>
+            <button class="hero-btn" id="exploreBtn">Explore Movies 👇</button>
+        </div>
+    </section>
+    
     <div class="movies-grid" id="moviesGrid"></div>
     
     <!-- Admin Modal (Secret) -->
@@ -135,6 +150,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Back to Top Button (New) -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to Top">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Made with 🎬 & ❤️ for the little ones</p>
+            <p class="copyright">© 2024 CineKids Ultimate. All rights reserved.</p>
+        </div>
+    </footer>
 
 <script src="script.js"></script>
 </body>

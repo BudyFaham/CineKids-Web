@@ -212,6 +212,17 @@ header {
     font-size: 0.9rem;
     transition: all 0.3s ease;
     font-family: inherit;
+    /* إزالة الـ outline الافتراضي لاستبداله بـ focus-visible مخصص */
+    outline: none;
+}
+
+/* 1. إمكانية الوصول: تنسيق التركيز (Focus Visible) مشابه للـ Hover */
+.filter-btn:focus-visible {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* حلقة تركيز واضحة */
 }
 
 .filter-btn:hover {
@@ -220,6 +231,7 @@ header {
     transform: translateY(-2px);
 }
 
+/* التنسيق الأساسي للأزرار النشطة (الافتراضي للكل) */
 .filter-btn.active {
     background: var(--accent-color);
     color: white;
@@ -227,12 +239,41 @@ header {
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
 }
 
-/* تصميم زر المفضلة في الفلتر ليكون مميزاً */
+/* --- 2. تخصيص ألوان أزرار الفلترة حسب الاستوديو --- */
+
+/* تعريف متغيرات الألوان المحلية لكل زر */
+.filter-btn[data-filter="Disney"] { --brand-color: var(--disney); }
+.filter-btn[data-filter="Pixar"] { --brand-color: var(--pixar); --brand-text: #000; }
+.filter-btn[data-filter="DreamWorks"] { --brand-color: var(--dreamworks); }
+.filter-btn[data-filter="Netflix"] { --brand-color: var(--netflix); }
+.filter-btn[data-filter="Illumination"] { --brand-color: var(--illumination); --brand-text: #000; }
+.filter-btn[data-filter="Sony"] { --brand-color: var(--sony); }
+.filter-btn[data-filter="Ghibli"] { --brand-color: var(--ghibli); }
+.filter-btn[data-filter="Fox"] { --brand-color: var(--fox); }
+.filter-btn[data-filter="WB"] { --brand-color: var(--wb); }
+.filter-btn[data-filter="Blue Sky"] { --brand-color: var(--bluesky); --brand-text: #000; }
+.filter-btn[data-filter="Laika"] { --brand-color: var(--laika); }
+.filter-btn[data-filter="Universal"] { --brand-color: var(--universal); }
+
+/* تطبيق الألوان عند التفاعل (Hover, Focus-Visible, Active) */
+/* نستثني زر "الكل" و "المفضلة" لأن لهما تنسيق خاص أدناه */
+.filter-btn:not([data-filter="all"]):not([data-filter="favorites"]):hover,
+.filter-btn:not([data-filter="all"]):not([data-filter="favorites"]):focus-visible,
+.filter-btn:not([data-filter="all"]):not([data-filter="favorites"]).active {
+    background: var(--brand-color);
+    border-color: var(--brand-color);
+    color: var(--brand-text, white); /* الأبيض افتراضي إلا إذا تم تحديده كأسود */
+    box-shadow: 0 0 15px var(--brand-color); /* توهج بنفس لون الاستوديو */
+}
+
+/* تخصيص زر المفضلة */
 .filter-btn[data-filter="favorites"] {
     border-color: rgba(239, 68, 68, 0.3);
     color: #fca5a5;
 }
 
+.filter-btn[data-filter="favorites"]:hover,
+.filter-btn[data-filter="favorites"]:focus-visible,
 .filter-btn[data-filter="favorites"].active {
     background: var(--danger-color);
     border-color: var(--danger-color);

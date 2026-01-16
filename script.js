@@ -136,6 +136,13 @@ class MovieApp {
                 this.dom.filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 this.state.filter = btn.dataset.filter;
+                
+                // --- التعديل الجديد هنا ---
+                // تصفير البحث عند تغيير الفلتر
+                this.state.search = '';
+                this.dom.searchInput.value = '';
+                // --------------------------
+
                 this.saveState();
                 this.render();
             });

@@ -3,7 +3,7 @@ class MovieApp {
         const savedState = JSON.parse(localStorage.getItem('cinekids_prefs')) || {};
         const savedTheme = localStorage.getItem('cinekids_theme') || 'dark';
         const savedFavorites = JSON.parse(localStorage.getItem('cinekids_favorites')) || [];
-        // قراءة حالة ظهور قسم الترحيب (هل تم رؤيته من قبل؟)
+        // قراءة حالة ظهور قسم الترحيب
         const hasSeenHero = localStorage.getItem('cinekids_hero_seen') === 'true';
 
         this.state = {
@@ -13,7 +13,7 @@ class MovieApp {
             sort: savedState.sort || 'newest',
             search: '',
             theme: savedTheme,
-            heroSeen: hasSeenHero // حالة جديدة
+            heroSeen: hasSeenHero
         };
 
         this.dom = {
@@ -61,38 +61,37 @@ class MovieApp {
 
     async init() {
         this.applyTheme();
-        this.checkHeroVisibility(); // التحقق من ظهور الترحيب عند البدء
+        this.checkHeroVisibility();
         this.state.movies = await this.generateDB();
         this.applySavedPreferences();
         this.bindEvents();
         this.render();
     }
 
-    // دالة جديدة للتحكم في ظهور قسم الترحيب
     checkHeroVisibility() {
         if (this.state.heroSeen && this.dom.heroSection) {
             this.dom.heroSection.style.display = 'none';
         }
     }
 
-    // دالة لإخفاء الترحيب وحفظ الحالة
+    // --- التعديل تم هنا ---
     dismissHero() {
         if (this.dom.heroSection) {
-            // تأثير حركي بسيط للاختفاء
             this.dom.heroSection.style.transition = 'opacity 0.5s ease, margin-top 0.5s ease';
             this.dom.heroSection.style.opacity = '0';
-            this.dom.heroSection.style.marginTop = '-200px'; // سحب المحتوى للأعلى
+            this.dom.heroSection.style.marginTop = '-200px'; 
             
             setTimeout(() => {
                 this.dom.heroSection.style.display = 'none';
-                this.dom.grid.scrollIntoView({ behavior: 'smooth' });
+                // بدلاً من التمرير للعنصر، نمرر لأعلى الصفحة لتفادي تغطية الهيدر
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 500);
 
-            // حفظ الحالة في المتصفح
             this.state.heroSeen = true;
             localStorage.setItem('cinekids_hero_seen', 'true');
         }
     }
+    // ---------------------
 
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.state.theme);
@@ -192,13 +191,11 @@ class MovieApp {
         
         this.dom.themeToggle.addEventListener('click', () => this.toggleTheme());
 
-        // --- تعديل وظيفة زر Explore ---
         if (this.dom.exploreBtn) {
             this.dom.exploreBtn.addEventListener('click', () => {
-                this.dismissHero(); // استدعاء دالة الإخفاء بدلاً من التمرير فقط
+                this.dismissHero();
             });
         }
-        // -----------------------------
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {

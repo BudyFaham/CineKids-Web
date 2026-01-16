@@ -3,7 +3,6 @@ class MovieApp {
         const savedState = JSON.parse(localStorage.getItem('cinekids_prefs')) || {};
         const savedTheme = localStorage.getItem('cinekids_theme') || 'dark';
         const savedFavorites = JSON.parse(localStorage.getItem('cinekids_favorites')) || [];
-        // قراءة حالة ظهور قسم الترحيب
         const hasSeenHero = localStorage.getItem('cinekids_hero_seen') === 'true';
 
         this.state = {
@@ -26,12 +25,10 @@ class MovieApp {
             resetBtn: document.getElementById('resetBtn'),
             themeToggle: document.getElementById('themeToggle'),
             
-            // عنصر قسم الترحيب
             heroSection: document.querySelector('.hero-section'),
             exploreBtn: document.getElementById('exploreBtn'),
             backToTopBtn: document.getElementById('backToTop'),
             
-            // عناصر لوحة التحكم السرية
             adminModal: document.getElementById('adminModal'),
             closeAdmin: document.getElementById('closeAdmin'),
             adminForm: document.getElementById('addMovieForm'),
@@ -74,24 +71,31 @@ class MovieApp {
         }
     }
 
-    // --- التعديل تم هنا ---
+    // --- التعديل الجذري هنا ---
     dismissHero() {
         if (this.dom.heroSection) {
-            this.dom.heroSection.style.transition = 'opacity 0.5s ease, margin-top 0.5s ease';
+            // 1. حساب الارتفاع الحقيقي للقسم بالكامل
+            const sectionHeight = this.dom.heroSection.offsetHeight;
+
+            // 2. تطبيق الحركة
+            this.dom.heroSection.style.transition = 'margin-top 0.5s ease-in-out, opacity 0.5s ease-in-out';
             this.dom.heroSection.style.opacity = '0';
-            this.dom.heroSection.style.marginTop = '-200px'; 
+            // سحب القسم للأعلى بمقدار ارتفاعه بالضبط
+            this.dom.heroSection.style.marginTop = `-${sectionHeight}px`;
             
+            // 3. التنظيف بعد انتهاء الحركة
             setTimeout(() => {
                 this.dom.heroSection.style.display = 'none';
-                // بدلاً من التمرير للعنصر، نمرر لأعلى الصفحة لتفادي تغطية الهيدر
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.dom.heroSection.style.marginTop = '0';
+                // التأكد من أننا في أعلى الصفحة (بدون تمرير ناعم لتجنب التعارض)
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }, 500);
 
             this.state.heroSeen = true;
             localStorage.setItem('cinekids_hero_seen', 'true');
         }
     }
-    // ---------------------
+    // ---------------------------
 
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.state.theme);
